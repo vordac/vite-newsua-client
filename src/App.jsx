@@ -1,38 +1,120 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from 'react';
 
 function App() {
-  const [count, setCount] = useState(0);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [username, setUsername] = useState('');
+  const [signinEmail, setSigninEmail] = useState('');
+  const [signinPassword, setSigninPassword] = useState('');
 
-  fetch('/api/hello')
-    .then(response => response.text())
-    .then(data => console.log(data));
+  const handleSignupSubmit = async (event) => {
+    event.preventDefault();
+
+    const response = await fetch('http://localhost:5000/signup', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        email,
+        password,
+        username,
+      }),
+    });
+
+    const data = await response.json();
+
+    if (response.ok) {
+      console.log('Signup successful:', data);
+    } else {
+      console.error('Error signing up:', data.error);
+    }
+  };
+
+  const handleSigninSubmit = async (event) => {
+    event.preventDefault();
+
+    const response = await fetch('http://localhost:5000/signin', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        email: signinEmail,
+        password: signinPassword,
+      }),
+    });
+
+    const data = await response.json();
+
+    if (response.ok) {
+      console.log('Signin successful:', data);
+
+      // Store the ID token in an HttpOnly cookie
+      document.cookie = `idToken=${data.idToken}; HttpOnly; Secure; Path=/; Max-Age=${60 * 60 * 24 * 7}`; // Cookie expires in 7 days
+    } else {
+      console.error('Error signing in:', data.error);
+    }
+  };
+
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      {/* SignUp */}
+      <form onSubmit={handleSignupSubmit}>
+        <label>
+          Email:
+          <input
+            type="email"
+            value={email}
+            onChange={(event) => setEmail(event.target.value)}
+          />
+        </label>
+        <br />
+        <label>
+          Password:
+          <input
+            type="password"
+            value={password}
+            onChange={(event) => setPassword(event.target.value)}
+          />
+        </label>
+        <br />
+        <label>
+          Username:
+          <input
+            type="username"
+            value={username}
+            onChange={(event) => setUsername(event.target.value)}
+          />
+        </label>
+        <br />
+        <button type="submit">Sign Up</button>
+      </form>
+
+      {/* SignIn */}
+      <form onSubmit={handleSigninSubmit}>
+        <label>
+          Email:
+          <input
+            type="email"
+            value={signinEmail}
+            onChange={(event) => setSigninEmail(event.target.value)}
+          />
+        </label>
+        <br />
+        <label>
+          Password:
+          <input
+            type="password"
+            value={signinPassword}
+            onChange={(event) => setSigninPassword(event.target.value)}
+          />
+        </label>
+        <br />
+        <button type="submit">Sign In</button>
+      </form>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
