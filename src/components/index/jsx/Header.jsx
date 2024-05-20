@@ -20,9 +20,13 @@ const Header = ({ user, selectedCategory, sortingType, sortingDirection, setSele
         setSortingDirection(sortingDirection);
     };
 
-    const handleAuthClick = () => {
-        navigate('/auth');
+    const handleLogClick = () => {
+        navigate('/login');
     };
+
+    const handleRegClick = () => {
+        navigate('/register');
+    }
 
     return (
         <header className="header">
@@ -66,7 +70,8 @@ const Header = ({ user, selectedCategory, sortingType, sortingDirection, setSele
                                 <p>Alice</p>
                             )}
 
-                            <button onClick={handleAuthClick}>Login</button>
+                            <button onClick={handleRegClick}>Register</button>
+                            <button onClick={handleLogClick}>Login</button>
                         </div>
                     </div>
                 </div>
