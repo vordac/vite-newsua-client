@@ -1,131 +1,78 @@
-// import React, { useEffect, useState } from 'react';
-// import { getAuth, onAuthStateChanged } from 'firebase/auth';
-// import { app } from '../../../services/Firebase';
-// import Swal from 'sweetalert2';
-// import AuthController from './AuthController';
-// import { useNavigate } from 'react-router-dom';
-// import UserDropdown from './UserDropdown';
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-// import { faSort, faSearch } from '@fortawesome/free-solid-svg-icons';
-
+import React, { useEffect, useState } from 'react';
+import DropdownUser from './DropdownUser';
+import DropdownSort from './DropdownSort';
+import '../css/header.css';
+import { useNavigate } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSort, faSearch } from '@fortawesome/free-solid-svg-icons';
 
 // const Header = ({ setSelectedCategory, setSortingType, setSortingDirection, selectedCategory, sortingType, sortingDirection, onSearch }) => {
-//   const [user, setUser] = useState(null);
-//   const [isOpen, setIsOpen] = useState(false);
-//   const [searchInput, setSearchInput] = useState('');
-//   const navigate = useNavigate();
+const Header = ({ user, selectedCategory, sortingType, sortingDirection, setSelectedCategory, setSortingType, setSortingDirection }) => {
 
-//   const auth = getAuth(app);
+    const navigate = useNavigate();
 
-//   useEffect(() => {
-//     const unsubscribe = onAuthStateChanged(auth, (user) => {
-//       if (user) {
-//         setUser(user);
-//       } else {
-//         setUser(null);
-//       }
-//     });
+    const handleCategoryClick = (category) => {
+        setSelectedCategory(category);
+    };
 
-//     return () => unsubscribe();
-//   }, []);
+    const handleSortingClick = (sortingType, sortingDirection) => {
+        setSortingType(sortingType);
+        setSortingDirection(sortingDirection);
+    };
 
-//   useEffect(() => {
-//     const handleClickOutside = (event) => {
-//       if (isOpen && !event.target.closest('.sorting-dropdown-button')) {
-//         setIsOpen(false);
-//       }
-//     };
+    const handleAuthClick = () => {
+        navigate('/auth');
+    };
 
-//     window.addEventListener('click', handleClickOutside);
+    return (
+        <header className="header">
 
-//     return () => {
-//       window.removeEventListener('click', handleClickOutside);
-//     };
-//   }, [isOpen]);
+            <div className="header-row">
 
-//   const handleSignOut = async () => {
-//     try {
-//       if (auth) {
-//         await auth.signOut();
-//         Swal.fire('Ви успішно вийшли з акаунту', '', 'success');
-//         navigate('/');
-//       }
-//     } catch (error) {
-//       Swal.fire('Помилка виходу', error.message, 'error');
-//     }
-//   };
+                <div className='links-row'>
+                    <div className='logo' >
+                        <a onClick={() => handleCategoryClick('')}>NEWSUA</a><br />
+                    </div>
+                    <a onClick={() => handleCategoryClick('Україна')}>УКРАЇНА</a><br />
+                    <a onClick={() => handleCategoryClick('Світ')}>СВІТ</a><br />
+                    <a onClick={() => handleCategoryClick('Бізнес')}>БІЗНЕС</a><br />
+                    <a onClick={() => handleCategoryClick('Технології')}>ТЕХНОЛОГІЇ</a><br />
+                    <a onClick={() => handleCategoryClick('Культура')}>КУЛЬТУРА</a><br />
+                    <a onClick={() => handleCategoryClick('Здоров\'я')}>ЗДОРОВ'Я</a><br />
+                    <a onClick={() => handleCategoryClick('Спорт')}>СПОРТ</a><br />
+                    <a onClick={() => handleCategoryClick('Ігри')}>ІГРИ</a><br />
+                </div>
+                <div className='header-manage'>
+                    {/* <div className='search-button'>
+            <div className="search-button-icon" onClick={handleSearchButton}>
+              <FontAwesomeIcon icon={faSearch} />
+            </div>
+          </div> */}
+                    <div className="sorting-dropdown-button">
+                        <div className="sorting-dropdown-button-icon" >
+                            <FontAwesomeIcon icon={faSort} />
+                        </div>
+                        <div className={`sorting-dropdown-content`}>
+                            <a onClick={() => handleSortingClick('publishTime', 'desc')}>Нові</a><br /> {/* publishTime, desc */}
+                            <a onClick={() => handleSortingClick('publishTime', 'asc')}>Старі</a><br /> {/* publishTime, asc */}
+                            <a onClick={() => handleSortingClick('comments', 'desc')}>Обговорювані</a><br /> {/* comments, desc */}
+                            <a onClick={() => handleSortingClick('rating', 'desc')}>Рейтингові</a><br /> {/* rating, desc */}
+                            <a onClick={() => handleSortingClick('views', 'desc')}>Популярні</a><br /> {/* views, desc */}
+                        </div>
+                        <div className='auth-controller'>
+                            {user ? (
+                                <p>Bob</p>
+                            ) : (
+                                <p>Alice</p>
+                            )}
 
-//   const handleLinkClick = (category) => {
-//     setSelectedCategory(category);
-//     navigate('/', { state: { selectedCategory: category, sortingType, sortingDirection } });
-//   };
+                            <button onClick={handleAuthClick}>Login</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+    );
+};
 
-//   const handleSearchButton = () => {
-//     navigate('/search');
-//   }
-
-//   const handleSearch = (event) => {
-//     event.preventDefault();
-//     onSearch(searchInput);
-//   };
-
-//   // Відкриття контекстного меню
-//   const toggleDropdown = () => {
-//     setIsOpen(!isOpen);
-//   };
-
-//   const handleDropdownClick = (sortingType, sortingDirection) => {
-//     setSortingType(sortingType);
-//     setSortingDirection(sortingDirection);
-//     navigate('/', { state: { selectedCategory, sortingType, sortingDirection } });
-//   }
-
-//   return (
-//     <header className="header">
-
-//       <div className="header-row">
-
-//         <div className='links-row'>
-//           <div className='logo' >
-//             <a href='' onClick={() => handleLinkClick('Усі')} >NEWSUA</a>
-//           </div>
-//           <a href='' onClick={() => handleLinkClick('Україна')}>УКРАЇНА</a>
-//           <a href='' onClick={() => handleLinkClick('Світ')}>СВІТ</a>
-//           <a href='' onClick={() => handleLinkClick('Бізнес')}>БІЗНЕС</a>
-//           <a href='' onClick={() => handleLinkClick('Технології')}>ТЕХНОЛОГІЇ</a>
-//           <a href='' onClick={() => handleLinkClick('Культура')}>КУЛЬТУРА</a>
-//           <a href='' onClick={() => handleLinkClick('Здоров\'я')}>ЗДОРОВ'Я</a>
-//           <a href='' onClick={() => handleLinkClick('Спорт')}>СПОРТ</a>
-//           <a href='' onClick={() => handleLinkClick('Ігри')}>ІГРИ</a>
-//         </div>
-//         <div className='header-manage'>
-//           <div className='search-button'>
-//           <div className="search-button-icon" onClick={handleSearchButton}>
-//               <FontAwesomeIcon icon={faSearch} />
-//             </div>
-//           </div>
-//           <div className="sorting-dropdown-button">
-//             <div className="sorting-dropdown-button-icon" onClick={toggleDropdown}>
-//               <FontAwesomeIcon icon={faSort} />
-//             </div>
-//             <div className={`sorting-dropdown-content ${isOpen ? 'show' : ''}`}>
-//               <a href='' onClick={() => handleDropdownClick('publishTime', 'desc')}>Нові</a> {/* publishTime, desc */}
-//               <a href='' onClick={() => handleDropdownClick('publishTime', 'asc')}>Старі</a> {/* publishTime, asc */}
-//               <a href='' onClick={() => handleDropdownClick('comments', 'desc')}>Обговорювані</a> {/* comments, desc */}
-//               <a href='' onClick={() => handleDropdownClick('rating', 'desc')}>Рейтингові</a> {/* rating, desc */}
-//               <a href='' onClick={() => handleDropdownClick('views', 'desc')}>Популярні</a> {/* views, desc */}
-//             </div>
-//           </div>
-// {/* 
-//           {user ? (
-//             <UserDropdown onSignOut={handleSignOut} />
-//           ) : (
-//             <AuthController />
-//           )} */}
-//         </div>
-//       </div>
-//     </header>
-//   );
-// };
-
-// export default Header;
+export default Header;

@@ -3,24 +3,33 @@ import axios from 'axios';
 import NewsItem from './NewsItem';
 import '../css/news-grid.css';
 
-function NewsGrid() {
+// function NewsGrid({ selectedCategory, sortingType, sortingDirection}) {
+function NewsGrid({ selectedCategory, sortingType, sortingDirection }) {
   const [articles, setArticles] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchArticles = async () => {
+    async function fetchArticles() {
       try {
-        const response = await axios.get('http://localhost:5000/articles');
+        const response = await axios.get('http://localhost:5000/articles', {
+          params: {
+            category: selectedCategory,
+            sortingType: sortingType,
+            sortingDirection: sortingDirection
+          },
+        });
         setArticles(response.data);
+        console.log(response.data);
         setLoading(false);
       } catch (error) {
-        console.error(error);
+        console.error('Error fetching articles:', error);
         setLoading(false);
       }
-    };
+    }
 
     fetchArticles();
-  }, []);
+    // [selectedCategory, sortingType, sortingDirection]
+  }, [selectedCategory, sortingType, sortingDirection]);
 
   return (
     <div className="news-grid">

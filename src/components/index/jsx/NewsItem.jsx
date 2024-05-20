@@ -7,7 +7,13 @@ import { faEye, faComment, faThumbsUp } from '@fortawesome/free-solid-svg-icons'
 const NewsItem = ({ article }) => {
     const { title, author, category, publishTime, views, imageUrl, rating, comments } = article;
 
-    const formattedPublishTime = new Date(publishTime.seconds * 1000).toLocaleString();
+    const formattedPublishTime = new Date(publishTime).toLocaleString('uk-UA', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit',
+    });
 
     return (
         <Card className="news-item">
