@@ -15,6 +15,11 @@ const NewsItem = ({ article }) => {
         minute: '2-digit',
     });
 
+    const handleTitleClick = (id) => {
+        // handleViewIncrement(id);
+        navigate('/read', { state: { id } });
+      };
+
     return (
         <Card className="news-item">
             <Card.Img src={imageUrl} alt={title} className="news-item-preview" />
@@ -35,7 +40,7 @@ const NewsItem = ({ article }) => {
             <Card.Body className="news-item-body">
                 <div className='news-item-upper'>
                     <Card.Text className="news-item-category">{category}</Card.Text>
-                    <Card.Title className="news-item-title">{title}</Card.Title>
+                    <Card.Title className="news-item-title" onClick={() => handleTitleClick(article.id)}>{title}</Card.Title>
                 </div>
                 <div className='news-item-lower'>
                     <div className='divider'></div>

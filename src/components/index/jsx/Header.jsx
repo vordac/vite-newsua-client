@@ -1,32 +1,16 @@
 import React, { useEffect, useState } from 'react';
+import '../css/header.css';
 import DropdownUser from './DropdownUser';
 import DropdownSort from './DropdownSort';
-import '../css/header.css';
-import { useNavigate } from 'react-router-dom';
+import DropdownAuth from './DropdownAuth';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSort, faSearch } from '@fortawesome/free-solid-svg-icons';
 
-// const Header = ({ setSelectedCategory, setSortingType, setSortingDirection, selectedCategory, sortingType, sortingDirection, onSearch }) => {
-const Header = ({ user, selectedCategory, sortingType, sortingDirection, setSelectedCategory, setSortingType, setSortingDirection }) => {
-
-    const navigate = useNavigate();
+const Header = ({ user, auth, selectedCategory, sortingType, sortingDirection, setSelectedCategory, setSortingType, setSortingDirection }) => {
 
     const handleCategoryClick = (category) => {
         setSelectedCategory(category);
     };
-
-    const handleSortingClick = (sortingType, sortingDirection) => {
-        setSortingType(sortingType);
-        setSortingDirection(sortingDirection);
-    };
-
-    const handleLogClick = () => {
-        navigate('/login');
-    };
-
-    const handleRegClick = () => {
-        navigate('/register');
-    }
 
     return (
         <header className="header">
@@ -47,32 +31,16 @@ const Header = ({ user, selectedCategory, sortingType, sortingDirection, setSele
                     <a onClick={() => handleCategoryClick('Ігри')}>ІГРИ</a><br />
                 </div>
                 <div className='header-manage'>
-                    {/* <div className='search-button'>
-            <div className="search-button-icon" onClick={handleSearchButton}>
-              <FontAwesomeIcon icon={faSearch} />
-            </div>
-          </div> */}
-                    <div className="sorting-dropdown-button">
-                        <div className="sorting-dropdown-button-icon" >
-                            <FontAwesomeIcon icon={faSort} />
-                        </div>
-                        <div className={`sorting-dropdown-content`}>
-                            <a onClick={() => handleSortingClick('publishTime', 'desc')}>Нові</a><br /> {/* publishTime, desc */}
-                            <a onClick={() => handleSortingClick('publishTime', 'asc')}>Старі</a><br /> {/* publishTime, asc */}
-                            <a onClick={() => handleSortingClick('comments', 'desc')}>Обговорювані</a><br /> {/* comments, desc */}
-                            <a onClick={() => handleSortingClick('rating', 'desc')}>Рейтингові</a><br /> {/* rating, desc */}
-                            <a onClick={() => handleSortingClick('views', 'desc')}>Популярні</a><br /> {/* views, desc */}
-                        </div>
-                        <div className='auth-controller'>
-                            {user ? (
-                                <p>Bob</p>
-                            ) : (
-                                <p>Alice</p>
-                            )}
 
-                            <button onClick={handleRegClick}>Register</button>
-                            <button onClick={handleLogClick}>Login</button>
-                        </div>
+                    <div className="sorting-dropdown-button">
+                        <DropdownSort sortingType={sortingType} sortingDirection={sortingDirection} setSortingType={setSortingType} setSortingDirection={setSortingDirection}/>
+                    </div>
+                    <div className='auth-controller'>
+                        {user ? (
+                            <DropdownUser auth={auth} />
+                        ) : (
+                            <DropdownAuth />
+                        )}
                     </div>
                 </div>
             </div>

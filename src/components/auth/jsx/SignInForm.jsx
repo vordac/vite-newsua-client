@@ -1,7 +1,11 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { app } from '../../../services/Firebase';
+import Swal from 'sweetalert2';
 
-const SignInForm = ({ onSigninSuccess, setUser }) => {
+const SignInForm = ({ setUser }) => {
+  const auth = getAuth(app);
   const [signinEmail, setSigninEmail] = useState('');
   const [signinPassword, setSigninPassword] = useState('');
 
@@ -9,34 +13,15 @@ const SignInForm = ({ onSigninSuccess, setUser }) => {
 
   const handleSigninSubmit = async (event) => {
     event.preventDefault();
-  
-    try {
-      const response = await fetch('http://localhost:5000/signin', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          email: signinEmail,
-          password: signinPassword,
-        }),
-        credentials: 'include',
-      });
-  
-      if (!response.ok) {
-        throw new Error('Error signing in');
+    if (signinEmail && signinPassword) {
+      try {
+        await signInWithEmailAndPassword(auth, signinEmail, signinPassword);
+        Swal.fire("Авторизація успішна", "", "success");
+        setUser(auth.currentUser);
+        navigate('/');
+      } catch (error) {
+        Swal.fire("Помилка входу", error.message, "error");
       }
-  
-      const data = await response.json();
-      const user = data.user;
-      setUser(user);
-  
-      console.log('Signin successful:', data);
-      navigate('/');
-  
-      onSigninSuccess(data.user || {});
-    } catch (error) {
-      console.error('Error signing in:', error);
     }
   };
 
@@ -66,4 +51,3 @@ const SignInForm = ({ onSigninSuccess, setUser }) => {
 }
 
 export default SignInForm;
-

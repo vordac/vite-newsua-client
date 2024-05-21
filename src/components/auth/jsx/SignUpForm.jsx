@@ -1,9 +1,12 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const SignUpForm = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [username, setUsername] = useState('');
+
+    const navigate = useNavigate();
 
     const handleSignupSubmit = async (event) => {
         event.preventDefault();
@@ -24,6 +27,7 @@ const SignUpForm = () => {
 
         if (response.ok) {
             console.log('Signup successful:', data);
+            navigate('/');
         } else {
             console.error('Error signing up:', data.error);
         }
