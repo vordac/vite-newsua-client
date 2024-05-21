@@ -9,6 +9,18 @@ import SignInForm from './components/auth/jsx/SignInForm';
 import SignUpForm from './components/auth/jsx/SignUpForm';
 import Read from './components/read/jsx/Read';
 
+import LastNews from './components/index/jsx/news/LastNews';
+import MainNews from './components/index/jsx/news/MainNews';
+import PopularNews from './components/index/jsx/news/PopularNews';
+import UkrainianNews from './components/index/jsx/news/UkrainianNews';
+import WorldNews from './components/index/jsx/news/WorldNews';
+import BusinessNews from './components/index/jsx/news/BusinessNews';
+import TechnologyNews from './components/index/jsx/news/TechnologyNews';
+import CultureNews from './components/index/jsx/news/CultureNews';
+import HealthNews from './components/index/jsx/news/HealthNews';
+import SportNews from './components/index/jsx/news/SportNews';
+import GamesNews from './components/index/jsx/news/GamesNews';
+
 function App() {
 
   const [user, setUser] = useState('');
@@ -34,17 +46,52 @@ function App() {
 
   const LayoutIndex = () => {
     return (
-      <>
-        <Header user={user} auth={auth} selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} sortingType={sortingType} sortingDirection={sortingDirection} setSortingType={setSortingType} setSortingDirection={setSortingDirection} />
-        <NewsGrid selectedCategory={selectedCategory} sortingType={sortingType} sortingDirection={sortingDirection} setSortingDirection={setSortingDirection} />
-      </>
+      <div className='index'>
+        <div className='index-divider'></div>
+        <div className='index-content'>
+          <div className='index-header'>
+            <Header user={user} auth={auth} selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} sortingType={sortingType} sortingDirection={sortingDirection} setSortingType={setSortingType} setSortingDirection={setSortingDirection} />
+          </div>
+          <div className='index-news'>
+            <div className='index-news-last'>
+              <h4>ОСТАННІ НОВИНИ</h4>
+              <LastNews />
+            </div>
+            <div className='index-news-other'>
+              <h4>ГОЛОВНЕ</h4>
+              <MainNews />
+              <h4>ПОПУЛЯРНЕ</h4>
+              <PopularNews />
+              <h4>ПРО УКРАЇНУ</h4>
+              <UkrainianNews />
+              <h4>ПРО СВІТ</h4>
+              <WorldNews />
+              <h4>ПРО БІЗНЕС</h4>
+              <BusinessNews />
+              <h4>ПРО ТЕХНОЛОГІЇ</h4>
+              <TechnologyNews />
+              <h4>ПРО КУЛЬТУРУ</h4>
+              <CultureNews />
+              <h4>ПРО ЗДОРОВ'Я</h4>
+              <HealthNews />
+              <h4>ПРО СПОРТ</h4>
+              <SportNews />
+              <h4>ПРО ІГРИ</h4>
+              <GamesNews />
+              
+              {/* <NewsGrid selectedCategory={selectedCategory} sortingType={sortingType} sortingDirection={sortingDirection} setSortingDirection={setSortingDirection} /> */}
+            </div>
+          </div>
+        </div>
+        <div className='index-divider'></div>
+      </div>
     );
   };
 
   const LayoutLogin = () => {
     return (
       <>
-        <SignInForm setUser={setUser}/>
+        <SignInForm setUser={setUser} />
       </>
     );
   };
@@ -52,7 +99,7 @@ function App() {
   const LayoutRegister = () => {
     return (
       <>
-        <SignUpForm/>
+        <SignUpForm />
       </>
     );
   };

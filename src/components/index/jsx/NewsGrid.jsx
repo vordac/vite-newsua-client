@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import NewsItem from './NewsItem';
 import { Link } from 'react-router-dom';
-import '../css/news-grid.css';
+// import '../css/news-grid.css';
 
 function NewsGrid({ selectedCategory, sortingType, sortingDirection }) {
   const [articles, setArticles] = useState([]);
@@ -20,6 +20,11 @@ function NewsGrid({ selectedCategory, sortingType, sortingDirection }) {
         });
         setArticles(response.data);
         setLoading(false);
+        console.log("Типы:");
+        console.log(`Категория: ${typeof selectedCategory}\nТип сортировки: ${typeof sortingType}\nНаправление сортировки: ${typeof sortingDirection}`);
+        console.log("Значения:");
+        console.log(`Категория: ${selectedCategory}\nТип сортировки: ${sortingType}\nНаправление сортировки ${sortingDirection}`);
+
       } catch (error) {
         setLoading(false);
       }
@@ -30,12 +35,10 @@ function NewsGrid({ selectedCategory, sortingType, sortingDirection }) {
 
   return (
     <div className="news-grid-items">
-      {loading ? (
-        <p className="news-grid-loading">Завантаження новин...</p>
-      ) : (
+      {
         Array.isArray(articles) && articles.map((article) => (
           <Link
-            key={article.id} 
+            key={article.id}
             to="/read"
             state={{ id: article.id }}
           >
@@ -44,7 +47,7 @@ function NewsGrid({ selectedCategory, sortingType, sortingDirection }) {
             />
           </Link>
         ))
-      )}
+      }
     </div>
   );
 }

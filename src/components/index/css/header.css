@@ -13,7 +13,7 @@
 .links-row {
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: baseline;
     flex-direction: row;
     margin: 0px 0px;
 }

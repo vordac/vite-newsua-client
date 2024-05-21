@@ -1,5 +1,4 @@
 .index-dropdown {
-    border: 1px solid black;
     border-radius: 1vh;
     margin: 1rem 1rem;
     font-size: 18px;
@@ -57,4 +56,25 @@
 .index-dropdown-content a:hover {
     color: black;
     background-color: yellow;
+}
+
+.links-row .index-dropdown{
+    background-color: transparent;
+    border: 1px solid transparent;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.links-row .index-dropdown a{
+    border: 0;
+    margin: 0;
+}
+
+.index-dropdown-text{
+    margin: 0;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

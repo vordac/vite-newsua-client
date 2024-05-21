@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom'; // import useNavigate hook
-import '../css/news-item.css';
+// import '../css/news-item.css';
 import { Card } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faComment, faThumbsUp } from '@fortawesome/free-solid-svg-icons';
