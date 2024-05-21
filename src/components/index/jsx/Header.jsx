@@ -5,10 +5,14 @@ import DropdownSort from './DropdownSort';
 import DropdownAuth from './DropdownAuth';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSort, faSearch } from '@fortawesome/free-solid-svg-icons';
+import { useNavigate } from 'react-router-dom';
 
 const Header = ({ user, auth, selectedCategory, sortingType, sortingDirection, setSelectedCategory, setSortingType, setSortingDirection }) => {
 
+    const navigate = useNavigate();
+
     const handleCategoryClick = (category) => {
+        navigate('/');
         setSelectedCategory(category);
     };
 

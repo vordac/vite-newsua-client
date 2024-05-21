@@ -1,10 +1,13 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom'; // import useNavigate hook
 import '../css/news-item.css';
 import { Card } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faComment, faThumbsUp } from '@fortawesome/free-solid-svg-icons';
 
 const NewsItem = ({ article }) => {
+    const navigate = useNavigate(); // use useNavigate hook
+
     const { title, author, category, publishTime, views, imageUrl, rating, comments } = article;
 
     const formattedPublishTime = new Date(publishTime).toLocaleString('uk-UA', {
@@ -17,8 +20,8 @@ const NewsItem = ({ article }) => {
 
     const handleTitleClick = (id) => {
         // handleViewIncrement(id);
-        navigate('/read', { state: { id } });
-      };
+        navigate('/read', { state: { id } }); // use navigate to navigate to /read route
+    };
 
     return (
         <Card className="news-item">
