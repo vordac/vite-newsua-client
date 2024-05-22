@@ -10,11 +10,12 @@ function UkrainianNews() {
     useEffect(() => {
         async function fetchArticles() {
             try {
-                const response = await axios.get('http://localhost:5000/articles', {
+                const response = await axios.get('http://localhost:5000/articles-grid', {
                     params: {
                         category: "Україна",
                         sortingType: "publishTime",
                         sortingDirection: "desc",
+                        limit: 6,
                     },
                 });
                 setArticles(response.data);

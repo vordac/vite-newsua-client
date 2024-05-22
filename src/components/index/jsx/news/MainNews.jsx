@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import GridNewsItem from '../news-item/GridNewsItem';
-import { Link } from 'react-router-dom';
 import '../../css/layouts/news-grid.css';
 
 function MainNews() {
@@ -10,11 +9,12 @@ function MainNews() {
     useEffect(() => {
         async function fetchArticles() {
             try {
-                const response = await axios.get('http://localhost:5000/articles', {
+                const response = await axios.get('http://localhost:5000/articles-grid', {
                     params: {
                         category: undefined,
                         sortingType: "views",
                         sortingDirection: "desc",
+                        limit: 6,
                     },
                 });
                 setArticles(response.data);
@@ -29,16 +29,10 @@ function MainNews() {
     return (
         <div className="news-grid-items">
             {
-                Array.isArray(articles) && articles.slice(0, 6).map((article) => ( 
-                    <Link
-                        key={article.id}
-                        to="/read"
-                        state={{ id: article.id }}
-                    >
-                        <GridNewsItem
+                Array.isArray(articles) && articles.slice(0, 6).map((article) => (
+                    <GridNewsItem
                             article={{ ...article, imageUrl: article.preview }}
                         />
-                    </Link>
                 ))
             }
         </div>

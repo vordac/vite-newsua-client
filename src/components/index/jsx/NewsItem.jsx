@@ -43,7 +43,13 @@ const NewsItem = ({ article }) => {
             <Card.Body className="news-item-body">
                 <div className='news-item-upper'>
                     <Card.Text className="news-item-category">{category}</Card.Text>
-                    <Card.Title className="news-item-title" onClick={() => handleTitleClick(article.id)}>{title}</Card.Title>
+                    <Link
+                        key={article.id}
+                        to="/read"
+                        state={{ id: article.id }}
+                    >
+                        <Card.Title className="news-item-title" onClick={() => handleTitleClick(article.id)}>{title}</Card.Title>
+                    </Link>
                 </div>
                 <div className='news-item-lower'>
                     <div className='divider'></div>

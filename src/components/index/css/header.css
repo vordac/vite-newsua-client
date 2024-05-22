@@ -1,6 +1,8 @@
 .header {
     background-color: var(--primary);
     padding: 0 0px;
+    display: flex;
+    align-content: baseline;
 }
 
 .header-row {
@@ -13,7 +15,7 @@
 .links-row {
     display: flex;
     justify-content: center;
-    align-items: baseline;
+    align-items: center;
     flex-direction: row;
     margin: 0px 0px;
 }
@@ -28,8 +30,10 @@
 }
 
 .links-row a:hover {
+    color: white;
     border-bottom: 2px solid white;
     transition: .3s ease all;
+    cursor: pointer;
 }
 
 .logo a {
@@ -39,7 +43,7 @@
     margin: 0 16px;
     border-bottom: 2px solid transparent;
     transition: .3s ease all;
-    font-size: 24px;
+    font-size: 32px;
     transition: .5s ease all;
 }
 

@@ -9,11 +9,12 @@ function LastNews() {
     useEffect(() => {
         async function fetchArticles() {
             try {
-                const response = await axios.get('http://localhost:5000/articles', {
+                const response = await axios.get('http://localhost:5000/articles-list', {
                     params: {
                         category: undefined,
                         sortingType: "publishTime",
                         sortingDirection: "desc",
+                        limit: 30,
                     },
                 });
                 setArticles(response.data);
@@ -27,7 +28,7 @@ function LastNews() {
     return (
         <div className="news-list-items">
             {
-                Array.isArray(articles) && articles.map((article) => (
+                Array.isArray(articles) && articles.slice(0, 30).map((article) => (
                     <Link
                         key={article.id}
                         to="/read"

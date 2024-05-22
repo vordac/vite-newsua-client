@@ -1,19 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import NewsItem from './NewsItem';
-// import '../css/news-grid.css';
+import GridNewsItem from '../news-item/GridNewsItem';
+import '../../css/layouts/news-grid.css';
 
-function NewsGrid({ selectedCategory, sortingType, sortingDirection }) {
+function CategoryNews({ selectedCategory, sortingType, sortingDirection }) {
   const [articles, setArticles] = useState([]);
 
   useEffect(() => {
     async function fetchArticles() {
       try {
-        const response = await axios.get('http://localhost:5000/articles', {
+        const response = await axios.get('http://localhost:5000/category', {
           params: {
             category: selectedCategory,
             sortingType: sortingType,
             sortingDirection: sortingDirection,
+            limit: 32,
           },
         });
         setArticles(response.data);
@@ -29,13 +30,13 @@ function NewsGrid({ selectedCategory, sortingType, sortingDirection }) {
     <div className="news-grid-items">
       {
         Array.isArray(articles) && articles.map((article) => (
-          <NewsItem
-            article={{ ...article, imageUrl: article.preview }}
-          />
+            <GridNewsItem
+              article={{ ...article, imageUrl: article.preview }}
+            />
         ))
       }
     </div>
   );
 }
 
-export default NewsGrid;
+export default CategoryNews;

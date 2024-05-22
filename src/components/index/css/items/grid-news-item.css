@@ -1,57 +1,84 @@
-.news-item{
+.news-item {
     background-color: var(--card-background-color);
 }
 
-.news-item:hover .news-item-title{
-    color: var(--card-title-color-hover);
+.news-item-preview {
+    width: 320px;
+    height: 192px;
     transition: .3s ease all;
 }
 
-.news-item:hover .news-item-preview{
-    border-radius: 8px;
-    transition: .3s ease all;
-}
-
-.news-item-preview{
-    width: 240px;
-    height: 144px;
-    transition: .3s ease all;
-}
-
-.news-item-preview img{
+.news-item-preview img {
     width: 100%;
     height: 100%;
 }
 
-.news-item-body{
+.news-item-body {}
 
+.news-item-upper {}
+
+.news-item-category {
+    margin: 0;
+    color: black;
+    z-index: 1000;
+    width: fit-content;
+    position: relative;
+    left: 8px;
+    bottom: 192px;
+    background-color: yellow;
+    padding: 4px 8px;
+    /* border-radius: 16px; */
+    font-size: 14px;
+    font-weight: bold;
 }
 
-.news-item-upper{
-
+.news-item-category:hover{
+    text-decoration: underline;
 }
 
-.news-item-category{
-
-}
-
-.news-item-title{
+.news-item-title {
     color: var(--card-title-color);
-    transition: .3s ease all;
+    transition: text-decoration 0.3s ease;
+    /* Define the transition property here */
+    position: relative;
+    bottom: 32px;
 }
 
-.news-item-lower{
-
+.news-item-title:hover,
+.news-item-preview:hover .news-item-title {
+  text-decoration: underline; /* Specify the text-decoration property here */
 }
 
-.news-item-lower-info{
-
+.news-item-lower {
+    position: relative;
+    bottom: 40px;
 }
 
-.news-item-publish-time{
 
+.news-item-lower-info-box {
+    display: flex;
+    position: relative;
+    bottom: 8px;
 }
 
-.news-item-author{
+.news-item-lower-info-author,
+.news-item-lower-info-box-views,
+.news-item-lower-info-box-publishtime {
+    color: #959595;
+    font-size: 14px;
+    margin: 0;
+}
 
+.news-item-lower-info-author{
+    width: fit-content;
+}
+
+.news-item-lower-info-author:hover{
+    color: #dbdbdb;
+}
+
+.news-item-lower-info-box-views{
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

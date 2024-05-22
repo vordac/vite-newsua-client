@@ -25,7 +25,7 @@
 }
 
 .index-divider{
-  width: 40%;
+  /* width: 10%; */
 }
 
 .index-content{
@@ -45,7 +45,6 @@
 .index-news-other h4{
   font-size: 24px;
   color: var(--font-color);
-  text-decoration: underline;
 }
 
 .index-news-other{

@@ -1,42 +1,42 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import GridNewsItem from '../news-item/GridNewsItem';
 import { Link } from 'react-router-dom';
 import '../../css/layouts/news-grid.css';
+import GridNewsItem from '../news-item/GridNewsItem';
 
-function GamesNews() {
+// List of author news that displays after user clicking on author at news grid
+function AuthorNews({selectedCategory, sortingType, sortingDirection}) {
     const [articles, setArticles] = useState([]);
 
     useEffect(() => {
         async function fetchArticles() {
             try {
-                const response = await axios.get('http://localhost:5000/articles', {
+                const response = await axios.get('http://localhost:5000/author', {
                     params: {
-                        category: "Ігри",
-                        sortingType: "publishTime",
-                        sortingDirection: "desc",
+                        category: undefined,
+                        sortingType: sortingType,
+                        sortingDirection: sortingDirection,
                     },
                 });
                 setArticles(response.data);
-
             } catch (error) {
             }
         }
 
         fetchArticles();
-    }, []);
+    }, [selectedCategory, sortingType, sortingDirection]);
 
     return (
-        <div className="news-grid-items">
+        <div className="news-list-items">
             {
-                Array.isArray(articles) && articles.slice(0, 6).map((article) => ( 
+                Array.isArray(articles) && articles.map((article) => (
                     <Link
                         key={article.id}
                         to="/read"
                         state={{ id: article.id }}
                     >
                         <GridNewsItem
-                            article={{ ...article, imageUrl: article.preview }}
+                            article={{ ...article }}
                         />
                     </Link>
                 ))
@@ -45,4 +45,4 @@ function GamesNews() {
     );
 }
 
-export default GamesNews;
+export default AuthorNews;
