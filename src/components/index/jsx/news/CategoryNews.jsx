@@ -3,7 +3,7 @@ import axios from 'axios';
 import GridNewsItem from '../news-item/GridNewsItem';
 import '../../css/layouts/news-grid.css';
 
-function CategoryNews({ selectedCategory, sortingType, sortingDirection }) {
+function CategoryNews({ selectedAuthor, setSelectedAuthor, selectedCategory, setSelectedCategory, sortingType, sortingDirection }) {
   const [articles, setArticles] = useState([]);
 
   useEffect(() => {
@@ -27,12 +27,14 @@ function CategoryNews({ selectedCategory, sortingType, sortingDirection }) {
   }, [selectedCategory, sortingType, sortingDirection]);
 
   return (
-    <div className="news-grid-items">
+    <div className="category-news-grid-items">
       {
         Array.isArray(articles) && articles.map((article) => (
-            <GridNewsItem
-              article={{ ...article, imageUrl: article.preview }}
-            />
+          <GridNewsItem
+            article={{ ...article, imageUrl: article.preview }}
+            setSelectedAuthor={setSelectedAuthor}
+            setSelectedCategory={setSelectedCategory}
+          />
         ))
       }
     </div>

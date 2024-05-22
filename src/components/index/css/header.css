@@ -3,6 +3,9 @@
     padding: 0 0px;
     display: flex;
     align-content: baseline;
+    position: sticky;
+    top: 0;
+    background-color: black;
 }
 
 .header-row {

@@ -5,7 +5,7 @@ import '../../css/layouts/news-grid.css';
 import GridNewsItem from '../news-item/GridNewsItem';
 
 // List of author news that displays after user clicking on author at news grid
-function AuthorNews({selectedCategory, sortingType, sortingDirection}) {
+function AuthorNews({ selectedAuthor, setSelectedAuthor, selectedCategory, setSelectedCategory, sortingType, sortingDirection }) {
     const [articles, setArticles] = useState([]);
 
     useEffect(() => {
@@ -13,7 +13,8 @@ function AuthorNews({selectedCategory, sortingType, sortingDirection}) {
             try {
                 const response = await axios.get('http://localhost:5000/author', {
                     params: {
-                        category: undefined,
+                        author: selectedAuthor,
+                        category: selectedCategory,
                         sortingType: sortingType,
                         sortingDirection: sortingDirection,
                     },
@@ -24,21 +25,17 @@ function AuthorNews({selectedCategory, sortingType, sortingDirection}) {
         }
 
         fetchArticles();
-    }, [selectedCategory, sortingType, sortingDirection]);
+    }, [selectedAuthor, selectedCategory, sortingType, sortingDirection]);
 
     return (
-        <div className="news-list-items">
+        <div className="author-news-grid-items">
             {
                 Array.isArray(articles) && articles.map((article) => (
-                    <Link
-                        key={article.id}
-                        to="/read"
-                        state={{ id: article.id }}
-                    >
-                        <GridNewsItem
-                            article={{ ...article }}
-                        />
-                    </Link>
+                    <GridNewsItem
+                        article={{ ...article, imageUrl: article.preview }}
+                        setSelectedAuthor={setSelectedAuthor}
+                        setSelectedCategory={setSelectedCategory}
+                    />
                 ))
             }
         </div>

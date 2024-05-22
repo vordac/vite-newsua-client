@@ -17,13 +17,17 @@ import WorldNews from './components/index/jsx/news/WorldNews';
 import ShowAllNews from './components/index/jsx/ShowAllNews';
 
 import CategoryNews from './components/index/jsx/news/CategoryNews';
+import CategoryHeader from './components/index/jsx/CategoryHeader';
 import AuthorNews from './components/index/jsx/news/AuthorNews';
+import AuthorHeader from './components/index/jsx/AuthorHeader';
 
 function App() {
 
   const [user, setUser] = useState('');
   const [auth, setAuth] = useState(null);
+  const [articleID, setArticleID] = useState();
   const [selectedCategory, setSelectedCategory] = useState();
+  const [selectedAuthor, setSelectedAuthor] = useState();
   const [sortingType, setSortingType] = useState('publishTime');
   const [sortingDirection, setSortingDirection] = useState('desc');
 
@@ -58,13 +62,13 @@ function App() {
             </div>
             <div className='index-news-other'>
               <h4>ГОЛОВНЕ</h4>
-              <MainNews />
+              <MainNews setSelectedCategory={setSelectedCategory} setSelectedAuthor={setSelectedAuthor} setArticleID={setArticleID}/>
               <h4>ПОПУЛЯРНЕ</h4>
-              <PopularNews />
+              <PopularNews setSelectedCategory={setSelectedCategory} setSelectedAuthor={setSelectedAuthor} setArticleID={setArticleID}/>
               <h4>ПРО УКРАЇНУ</h4>
-              <UkrainianNews />
+              <UkrainianNews setSelectedCategory={setSelectedCategory} setSelectedAuthor={setSelectedAuthor} setArticleID={setArticleID}/>
               <h4>ПРО СВІТ</h4>
-              <WorldNews />
+              <WorldNews setSelectedCategory={setSelectedCategory} setSelectedAuthor={setSelectedAuthor} setArticleID={setArticleID}/>
             </div>
           </div>
         </div>
@@ -93,7 +97,7 @@ function App() {
     return (
       <>
         <Header user={user} auth={auth} selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} sortingType={sortingType} sortingDirection={sortingDirection} setSortingType={setSortingType} setSortingDirection={setSortingDirection} />
-        <Read />
+        <Read articleID={articleID}/>
       </>
     );
   };
@@ -101,15 +105,19 @@ function App() {
   const LayoutAuthor = () => {
     return (
       <>
-        <AuthorNews selectedCategory={selectedCategory} sortingType={sortingType} sortingDirection={sortingDirection} setSortingDirection={setSortingDirection}/>
+        <Header user={user} auth={auth} selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} sortingType={sortingType} sortingDirection={sortingDirection} setSortingType={setSortingType} setSortingDirection={setSortingDirection} />
+        <AuthorHeader selectedAuthor={selectedAuthor}/>
+        <AuthorNews selectedAuthor={selectedAuthor} setSelectedAuthor={setSelectedAuthor} selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} sortingType={sortingType} sortingDirection={sortingDirection} setSortingDirection={setSortingDirection} setArticleID={setArticleID}/>
       </>
     )
   }
 
   const LayoutCategory = () => {
-    return(
+    return (
       <>
-        <CategoryNews selectedCategory={selectedCategory} sortingType={sortingType} sortingDirection={sortingDirection} setSortingDirection={setSortingDirection}/> 
+        <Header user={user} auth={auth} selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} sortingType={sortingType} sortingDirection={sortingDirection} setSortingType={setSortingType} setSortingDirection={setSortingDirection} />
+        <CategoryHeader selectedCategory={selectedCategory}/>
+        <CategoryNews selectedAuthor={selectedAuthor} setSelectedAuthor={setSelectedAuthor} selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} sortingType={sortingType} sortingDirection={sortingDirection} setSortingDirection={setSortingDirection} setArticleID={setArticleID}/>
       </>
     )
   }
@@ -133,4 +141,4 @@ function App() {
 }
 
 export default App;
-{/* <NewsGrid selectedCategory={selectedCategory} sortingType={sortingType} sortingDirection={sortingDirection} setSortingDirection={setSortingDirection} /> */}
+{/* <NewsGrid selectedCategory={selectedCategory} sortingType={sortingType} sortingDirection={sortingDirection} setSortingDirection={setSortingDirection} /> */ }

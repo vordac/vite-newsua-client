@@ -4,7 +4,7 @@ import GridNewsItem from '../news-item/GridNewsItem';
 import { Link } from 'react-router-dom';
 import '../../css/layouts/news-grid.css';
 
-function PopularNews() {
+function PopularNews({ selectedCategory, sortingType, sortingDirection, setSortingDirection }) {
     const [articles, setArticles] = useState([]);
 
     useEffect(() => {
@@ -30,16 +30,14 @@ function PopularNews() {
     return (
         <div className="news-grid-items">
             {
-                Array.isArray(articles) && articles.slice(0, 6).map((article) => ( 
-                    <Link
-                        key={article.id}
-                        to="/read"
-                        state={{ id: article.id }}
-                    >
-                        <GridNewsItem
-                            article={{ ...article, imageUrl: article.preview }}
-                        />
-                    </Link>
+                Array.isArray(articles) && articles.slice(0, 6).map((article) => (
+                    <GridNewsItem
+                        article={{ ...article, imageUrl: article.preview }}
+                        selectedCategory={selectedCategory}
+                        sortingType={sortingType}
+                        sortingDirection={sortingDirection}
+                        setSortingDirection={setSortingDirection}
+                    />
                 ))
             }
         </div>

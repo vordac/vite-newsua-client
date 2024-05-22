@@ -3,7 +3,7 @@ import axios from 'axios';
 import GridNewsItem from '../news-item/GridNewsItem';
 import '../../css/layouts/news-grid.css';
 
-function MainNews() {
+function MainNews({ setSelectedCategory, setSelectedAuthor, setArticleID }) {
     const [articles, setArticles] = useState([]);
 
     useEffect(() => {
@@ -26,13 +26,18 @@ function MainNews() {
         fetchArticles();
     }, []);
 
+    
+
     return (
         <div className="news-grid-items">
             {
                 Array.isArray(articles) && articles.slice(0, 6).map((article) => (
                     <GridNewsItem
-                            article={{ ...article, imageUrl: article.preview }}
-                        />
+                        article={{ ...article, imageUrl: article.preview }}
+                        setSelectedAuthor={setSelectedAuthor}
+                        setSelectedCategory={setSelectedCategory}
+                        setArticleID={setArticleID}
+                    />
                 ))
             }
         </div>

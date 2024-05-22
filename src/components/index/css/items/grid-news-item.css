@@ -34,19 +34,25 @@
 
 .news-item-category:hover{
     text-decoration: underline;
+    cursor: pointer;
 }
 
 .news-item-title {
     color: var(--card-title-color);
-    transition: text-decoration 0.3s ease;
-    /* Define the transition property here */
+    transition: .3s ease all;
     position: relative;
-    bottom: 32px;
+    bottom: 30px;
+    font-weight: 500;
+}
+
+.news-item-title:hover {
+    cursor: pointer;
+    text-decoration: underline;
 }
 
 .news-item-title:hover,
 .news-item-preview:hover .news-item-title {
-  text-decoration: underline; /* Specify the text-decoration property here */
+  text-decoration: underline; 
 }
 
 .news-item-lower {
@@ -75,6 +81,7 @@
 
 .news-item-lower-info-author:hover{
     color: #dbdbdb;
+    cursor: pointer;
 }
 
 .news-item-lower-info-box-views{

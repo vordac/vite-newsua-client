@@ -37,6 +37,11 @@ const Header = ({ user, auth, selectedCategory, sortingType, sortingDirection, s
         setSelectedCategory(category);
     };
 
+    const handleLogoClick = (category) => {
+        navigate('/');
+        setSelectedCategory(category);
+    }
+
     return (
         <header className="header">
 
@@ -44,7 +49,7 @@ const Header = ({ user, auth, selectedCategory, sortingType, sortingDirection, s
 
                 <div className='links-row'>
                     <div className='logo' >
-                        <a onClick={() => handleCategoryClick('')}>NEWSUA</a>
+                        <a onClick={() => handleLogoClick('')}>NEWSUA</a>
                     </div>
                     <a onClick={() => handleCategoryClick('Україна')}>УКРАЇНА</a>
                     <a onClick={() => handleCategoryClick('Світ')}>СВІТ</a>
