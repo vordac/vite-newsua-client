@@ -29,6 +29,7 @@ const GridNewsItem = ({ article }) => {
 
     const handleCategoryClick = () => {
         navigate('/category');
+        setSelectedCategory(category);
     }
 
     return (
