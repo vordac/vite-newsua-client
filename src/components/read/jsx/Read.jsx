@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import '../css/read.css';
 import LastNews from '../../index/jsx/news/LastNews';
 import ShowAllNews from '../../index/jsx/ShowAllNews';
 
-const Read = () => {
+const Read = ({ setSelectedAuthor, setSelectedCategory }) => {
     const [article, setArticle] = useState(null);
     const [error, setError] = useState(null);
 
     const location = useLocation();
+    const navigate = useNavigate();
     const { id } = location.state || {};
 
     const formatDate = (date) => {
@@ -45,6 +46,16 @@ const Read = () => {
         fetchArticle();
     }, [id, setArticle]);
 
+    const handleAuthorClick = (author) => {
+        navigate('/author');
+        setSelectedAuthor(author);
+    }
+
+    const handleCategoryClick = (category) => {
+        navigate('/category');
+        setSelectedCategory(category);
+    }
+
     // render the article data
     return (
         <div className='read'>
@@ -53,14 +64,14 @@ const Read = () => {
                     <div className='read-box'>
                         <div className='read-box-category'>
                             <p>Новини &rarr;&nbsp; </p>
-                            <p key={article.id} className='read-box-category-link'> {article.category}</p>
+                            <p key={article.id} className='read-box-category-link' onClick={() => handleCategoryClick(article.category)}> {article.category}</p>
                         </div>
                         <div className='read-box-title'>
                             <h1 key={article.id}>{article.title}</h1>
                         </div>
                         <div className='read-box-info'>
                             <div className='read-box-info-author'>
-                                <p key={article.id}>{article.author}</p>
+                                <p key={article.id} onClick={() => handleAuthorClick(article.author)}>{article.author}</p>
                             </div>
                             <div className='read-box-info-publishtime'>
                                 <p key={article.id}>&nbsp;&#x2022;&nbsp;{formatDate(new Date(article.publishTime))}</p>

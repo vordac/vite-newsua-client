@@ -97,7 +97,7 @@ function App() {
     return (
       <>
         <Header user={user} auth={auth} selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} sortingType={sortingType} sortingDirection={sortingDirection} setSortingType={setSortingType} setSortingDirection={setSortingDirection} />
-        <Read articleID={articleID}/>
+        <Read setSelectedAuthor={setSelectedAuthor} setSelectedCategory={setSelectedCategory}/>
       </>
     );
   };
