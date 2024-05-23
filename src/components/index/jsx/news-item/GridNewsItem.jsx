@@ -20,7 +20,7 @@ const GridNewsItem = ({ article, setSelectedCategory, setSelectedAuthor}) => {
     });
 
     const handleReadClick = (id) => {
-        fetch('http://localhost:5000/views', {
+        fetch('https://newsua-217e80321b33.herokuapp.com/views', {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',
