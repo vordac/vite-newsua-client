@@ -11,7 +11,7 @@ function AuthorNews({ selectedAuthor, setSelectedAuthor, selectedCategory, setSe
     useEffect(() => {
         async function fetchArticles() {
             try {
-                const response = await axios.get('https://newsua-217e80321b33.herokuapp.com/author', {
+                const response = await axios.get('http://localhost:5000/author', {
                     params: {
                         author: selectedAuthor,
                         category: selectedCategory,
