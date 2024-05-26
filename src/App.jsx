@@ -113,7 +113,8 @@ function App() {
       <>
         <Header user={user} auth={auth} selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} sortingType={sortingType} sortingDirection={sortingDirection} setSortingType={setSortingType} setSortingDirection={setSortingDirection} />
         <AuthorHeader selectedAuthor={selectedAuthor} />
-        <AuthorNews selectedAuthor={selectedAuthor} setSelectedAuthor={setSelectedAuthor} selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} sortingType={sortingType} sortingDirection={sortingDirection} setSortingDirection={setSortingDirection} setArticleID={setArticleID} />
+        <DropdownSort sortingType={sortingType} sortingDirection={sortingDirection} setSortingType={setSortingType} setSortingDirection={setSortingDirection} /> 
+        <AuthorNews selectedAuthor={selectedAuthor} setSelectedAuthor={setSelectedAuthor} selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} sortingType={sortingType} sortingDirection={sortingDirection} setSortingDirection={setSortingDirection}  />
       </>
     )
   }
@@ -123,6 +124,7 @@ function App() {
       <>
         <Header user={user} auth={auth} selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} sortingType={sortingType} sortingDirection={sortingDirection} setSortingType={setSortingType} setSortingDirection={setSortingDirection} />
         <CategoryHeader selectedCategory={selectedCategory} />
+        <DropdownSort sortingType={sortingType} sortingDirection={sortingDirection} setSortingType={setSortingType} setSortingDirection={setSortingDirection} /> 
         <CategoryNews selectedAuthor={selectedAuthor} setSelectedAuthor={setSelectedAuthor} selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} sortingType={sortingType} sortingDirection={sortingDirection} setSortingDirection={setSortingDirection} setArticleID={setArticleID} />
       </>
     )
@@ -132,17 +134,8 @@ function App() {
     return (
       <>
         <Header user={user} auth={auth} selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} sortingType={sortingType} sortingDirection={sortingDirection} setSortingType={setSortingType} setSortingDirection={setSortingDirection} />
-        <DropdownSort />
-        <AllNews
-          selectedCategory={selectedCategory}
-          setSelectedCategory={setSelectedCategory}
-          sortingType={sortingType}
-          setSortingType={setSortingType}
-          sortingDirection={sortingDirection}
-          setSortingDirection={setSortingDirection}
-          selectedAuthor={selectedAuthor}
-          setSelectedAuthor={setSelectedAuthor}
-        />
+        <DropdownSort sortingType={sortingType} sortingDirection={sortingDirection} setSortingType={setSortingType} setSortingDirection={setSortingDirection} /> 
+        <AllNews selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} sortingType={sortingType} setSortingType={setSortingType} sortingDirection={sortingDirection} setSortingDirection={setSortingDirection} selectedAuthor={selectedAuthor} setSelectedAuthor={setSelectedAuthor} />
       </>
     )
   }

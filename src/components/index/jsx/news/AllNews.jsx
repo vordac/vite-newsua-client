@@ -6,25 +6,23 @@ import '../../css/layouts/news-grid.css';
 function AllNews({ selectedAuthor, setSelectedAuthor, selectedCategory, setSelectedCategory, sortingType, sortingDirection }) {
   const [articles, setArticles] = useState([]);
 
-  useEffect(() => {
-    async function fetchArticles() {
-      try {
-        const sortDir = sortingDirection === 'asc' || sortingDirection === 'desc' ? sortingDirection : 'desc';
-        const response = await axios.get('http://localhost:5000/all', {
-          params: {
-            category: selectedCategory,
-            sortingType: sortingType,
-            sortingDirection: sortDir,
-          },
-        });
-        setArticles(response.data);
-      } catch (error) {
-        console.log(error);
-      }
+  const fetchArticles = async () => {
+    try {
+      const response = await axios.get('http://localhost:5000/all', {
+        params: {
+          sortingType: sortingType,
+          sortingDirection: sortingDirection,
+        },
+      });
+      setArticles(response.data);
+    } catch (error) {
+      console.log(error);
     }
+  };
 
+  useEffect(() => {
     fetchArticles();
-  }, [selectedCategory, sortingType, sortingDirection]);
+  }, [sortingType, sortingDirection]);
 
   return (
     <div className="all-news-grid-items">

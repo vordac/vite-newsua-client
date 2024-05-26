@@ -3,13 +3,13 @@ import { useNavigate } from 'react-router-dom';
 import '../../css/items/grid-news-item.css';
 import { Card } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEye, faComment, faThumbsUp } from '@fortawesome/free-solid-svg-icons';
+import { faEye, faThumbsUp } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
 
 const GridNewsItem = ({ article, setSelectedCategory, setSelectedAuthor }) => {
     const navigate = useNavigate(); 
 
-    const { title, author, category, views, publishTime, imageUrl } = article;
+    const { title, author, category, views, publishTime, imageUrl, rating } = article;
 
     const formattedPublishTime = new Date(publishTime).toLocaleString('uk-UA', {
         year: 'numeric',
@@ -70,6 +70,10 @@ const GridNewsItem = ({ article, setSelectedCategory, setSelectedAuthor }) => {
                             <Card.Text className="news-item-lower-info-box-views">
                                 <FontAwesomeIcon icon={faEye} />
                                 <div>&nbsp;{views}&nbsp;&nbsp;&#x2022;&nbsp;&nbsp;</div>
+                            </Card.Text>
+                            <Card.Text className="news-item-lower-info-box-views">
+                                <FontAwesomeIcon icon={faThumbsUp} />
+                                <div>&nbsp;{rating}&nbsp;&nbsp;&#x2022;&nbsp;&nbsp;</div>
                             </Card.Text>
                             <Card.Text className="news-item-lower-info-box-publishtime">{formattedPublishTime}</Card.Text>
                         </div>
