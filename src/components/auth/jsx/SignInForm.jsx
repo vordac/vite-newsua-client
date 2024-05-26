@@ -3,6 +3,10 @@ import { useNavigate } from 'react-router-dom';
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { app } from '../../../services/Firebase';
 import Swal from 'sweetalert2';
+import '../css/auth.css';
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faA, faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 
 const SignInForm = ({ setUser }) => {
   const auth = getAuth(app);
@@ -25,28 +29,27 @@ const SignInForm = ({ setUser }) => {
     }
   };
 
+  const handleBackClick = () => {
+    navigate('/');
+  }
+
+  const handleRegClick = () => {
+    navigate('/register')
+  }
+
   return (
-    <form onSubmit={handleSigninSubmit}>
-      <label>
-        Email:
-        <input
-          type="email"
-          value={signinEmail}
-          onChange={(event) => setSigninEmail(event.target.value)}
-        />
-      </label>
-      <br />
-      <label>
-        Password:
-        <input
-          type="password"
-          value={signinPassword}
-          onChange={(event) => setSigninPassword(event.target.value)}
-        />
-      </label>
-      <br />
-      <button type="submit">Sign In</button>
-    </form>
+    <div className='auth'>
+      <form onSubmit={handleSigninSubmit} className='auth-form'>
+        <input value={signinEmail} type="email" name="email" class="input" onChange={(event) => setSigninEmail(event.target.value)} placeholder="Пошта" />
+        <input value={signinPassword} type="password" name="password" class="input" onChange={(event) => setSigninPassword(event.target.value)} placeholder="Пароль" />
+        <button className='auth-form-submit' type="submit">Увійти</button>
+        <button className='auth-signin-form-signup' onClick={handleRegClick}>Ще немає акаунту?</button>
+      </form>
+      <div className='auth-back'>
+          <button><FontAwesomeIcon icon={faArrowLeft} onClick={handleBackClick} /></button>
+        </div>
+    </div>
+
   );
 }
 

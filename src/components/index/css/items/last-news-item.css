@@ -14,6 +14,7 @@
 .last-news-item-lower, 
 .last-news-item-lower-views{
     display: flex;
+    font-size: 14px;
 }
 
 .last-news-item-lower{
@@ -23,9 +24,7 @@
 }
 
 .last-news-item-lower-publishtime{
-    font-style: italic;
     margin: 4px 0;
-    
 }
 
 .last-news-item-lower-views{

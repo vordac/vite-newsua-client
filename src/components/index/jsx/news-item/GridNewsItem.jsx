@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faComment, faThumbsUp } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
 
-const GridNewsItem = ({ article, setSelectedCategory, setSelectedAuthor}) => {
+const GridNewsItem = ({ article, setSelectedCategory, setSelectedAuthor }) => {
     const navigate = useNavigate(); // use useNavigate hook
 
     const { title, author, category, views, publishTime, imageUrl } = article;
@@ -21,20 +21,20 @@ const GridNewsItem = ({ article, setSelectedCategory, setSelectedAuthor}) => {
 
     const handleReadClick = (id) => {
         fetch('http://localhost:5000/views', {
-          method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ articleId: id }),
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ articleId: id }),
         })
-        .then(response => response.json())
-        .then(data => console.log(data))
-        .catch((error) => {
-          console.error('Error:', error);
-        });
-      
+            .then(response => response.json())
+            .then(data => console.log(data))
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+
         navigate('/read', { state: { id } });
-      };
+    };
 
     const handleAuthorClick = () => {
         navigate('/author');
@@ -48,6 +48,7 @@ const GridNewsItem = ({ article, setSelectedCategory, setSelectedAuthor}) => {
 
     return (
         <Card className="news-item">
+            <Card.Text className="news-item-category" onClick={handleCategoryClick}>{category}</Card.Text>
             <Link
                 key={article.id}
                 to="/read"
@@ -58,14 +59,13 @@ const GridNewsItem = ({ article, setSelectedCategory, setSelectedAuthor}) => {
             </Link>
             <Card.Body className="news-item-body">
                 <div className='news-item-upper'>
-                    <Card.Text className="news-item-category" onClick={handleCategoryClick}>{category}</Card.Text>
                     {/* <Link
                         key={article.id}
                         to="/read"
                         state={{ id: article.id }}
                         onClick={() => handleReadClick(article.id)}
                     > */}
-                        <Card.Title className="news-item-title" onClick={() => handleReadClick(article.id)}>{title}</Card.Title>
+                    <Card.Title className="news-item-title" onClick={() => handleReadClick(article.id)}>{title}</Card.Title>
                     {/* </Link> */}
                 </div>
                 <div className='news-item-lower'>

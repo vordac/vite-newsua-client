@@ -39,6 +39,7 @@
 
 .index-news-last{
   margin: 0 16px;
+  width: 50%;
 }
 
 .index-news-last h4,
@@ -48,7 +49,7 @@
 }
 
 .index-news-other{
-  margin: 0 16px;
+  margin: 0 16px 32px 16px;
 }
 
 a {

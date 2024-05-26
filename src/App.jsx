@@ -1,10 +1,9 @@
-import { BrowserRouter as Router, Route, Routes, Outlet } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, Outlet, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { app } from './services/Firebase';
 
 import Header from './components/index/jsx/Header';
-import NewsGrid from './components/index/jsx/NewsGrid';
 import SignInForm from './components/auth/jsx/SignInForm';
 import SignUpForm from './components/auth/jsx/SignUpForm';
 import Read from './components/read/jsx/Read';
@@ -20,6 +19,10 @@ import CategoryNews from './components/index/jsx/news/CategoryNews';
 import CategoryHeader from './components/index/jsx/CategoryHeader';
 import AuthorNews from './components/index/jsx/news/AuthorNews';
 import AuthorHeader from './components/index/jsx/AuthorHeader';
+import AllNews from './components/index/jsx/news/AllNews';
+
+import './components/auth/css/auth.css';
+import './App.css';
 
 function App() {
 
@@ -46,6 +49,7 @@ function App() {
     return () => unsubscribe();
   }, []);
 
+
   const LayoutIndex = () => {
     return (
       <div className='index'>
@@ -58,17 +62,17 @@ function App() {
             <div className='index-news-last'>
               <h4>ОСТАННІ НОВИНИ</h4>
               <LastNews />
-              <ShowAllNews />
+              <ShowAllNews setSelectedCategory={setSelectedCategory} setSortingType={setSortingType} setSortingDirection={setSortingDirection} />
             </div>
             <div className='index-news-other'>
               <h4>ГОЛОВНЕ</h4>
-              <MainNews setSelectedCategory={setSelectedCategory} setSelectedAuthor={setSelectedAuthor} setArticleID={setArticleID}/>
+              <MainNews setSelectedCategory={setSelectedCategory} setSelectedAuthor={setSelectedAuthor} setArticleID={setArticleID} />
               <h4>ПОПУЛЯРНЕ</h4>
-              <PopularNews setSelectedCategory={setSelectedCategory} setSelectedAuthor={setSelectedAuthor} setArticleID={setArticleID}/>
+              <PopularNews setSelectedCategory={setSelectedCategory} setSelectedAuthor={setSelectedAuthor} setArticleID={setArticleID} />
               <h4>ПРО УКРАЇНУ</h4>
-              <UkrainianNews setSelectedCategory={setSelectedCategory} setSelectedAuthor={setSelectedAuthor} setArticleID={setArticleID}/>
+              <UkrainianNews setSelectedCategory={setSelectedCategory} setSelectedAuthor={setSelectedAuthor} setArticleID={setArticleID} />
               <h4>ПРО СВІТ</h4>
-              <WorldNews setSelectedCategory={setSelectedCategory} setSelectedAuthor={setSelectedAuthor} setArticleID={setArticleID}/>
+              <WorldNews setSelectedCategory={setSelectedCategory} setSelectedAuthor={setSelectedAuthor} setArticleID={setArticleID} />
             </div>
           </div>
         </div>
@@ -79,17 +83,15 @@ function App() {
 
   const LayoutLogin = () => {
     return (
-      <>
-        <SignInForm setUser={setUser} />
-      </>
+      <SignInForm setUser={setUser} />
     );
   };
 
   const LayoutRegister = () => {
     return (
-      <>
+      <div className='auth'>
         <SignUpForm />
-      </>
+      </div>
     );
   };
 
@@ -97,7 +99,7 @@ function App() {
     return (
       <>
         <Header user={user} auth={auth} selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} sortingType={sortingType} sortingDirection={sortingDirection} setSortingType={setSortingType} setSortingDirection={setSortingDirection} />
-        <Read setSelectedAuthor={setSelectedAuthor} setSelectedCategory={setSelectedCategory}/>
+        <Read setSelectedAuthor={setSelectedAuthor} setSelectedCategory={setSelectedCategory} />
       </>
     );
   };
@@ -106,8 +108,8 @@ function App() {
     return (
       <>
         <Header user={user} auth={auth} selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} sortingType={sortingType} sortingDirection={sortingDirection} setSortingType={setSortingType} setSortingDirection={setSortingDirection} />
-        <AuthorHeader selectedAuthor={selectedAuthor}/>
-        <AuthorNews selectedAuthor={selectedAuthor} setSelectedAuthor={setSelectedAuthor} selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} sortingType={sortingType} sortingDirection={sortingDirection} setSortingDirection={setSortingDirection} setArticleID={setArticleID}/>
+        <AuthorHeader selectedAuthor={selectedAuthor} />
+        <AuthorNews selectedAuthor={selectedAuthor} setSelectedAuthor={setSelectedAuthor} selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} sortingType={sortingType} sortingDirection={sortingDirection} setSortingDirection={setSortingDirection} setArticleID={setArticleID} />
       </>
     )
   }
@@ -116,8 +118,17 @@ function App() {
     return (
       <>
         <Header user={user} auth={auth} selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} sortingType={sortingType} sortingDirection={sortingDirection} setSortingType={setSortingType} setSortingDirection={setSortingDirection} />
-        <CategoryHeader selectedCategory={selectedCategory}/>
-        <CategoryNews selectedAuthor={selectedAuthor} setSelectedAuthor={setSelectedAuthor} selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} sortingType={sortingType} sortingDirection={sortingDirection} setSortingDirection={setSortingDirection} setArticleID={setArticleID}/>
+        <CategoryHeader selectedCategory={selectedCategory} />
+        <CategoryNews selectedAuthor={selectedAuthor} setSelectedAuthor={setSelectedAuthor} selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} sortingType={sortingType} sortingDirection={sortingDirection} setSortingDirection={setSortingDirection} setArticleID={setArticleID} />
+      </>
+    )
+  }
+
+  const LayoutAll = () => {
+    return (
+      <>
+        <Header user={user} auth={auth} selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} sortingType={sortingType} sortingDirection={sortingDirection} setSortingType={setSortingType} setSortingDirection={setSortingDirection} />
+        <AllNews selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} sortingType={sortingType} setSortingType={setSortingType} sortingDirection={setSortingDirection} setSortingDirection={setSortingDirection} selectedAuthor={selectedAuthor} setSelectedAuthor={setSelectedAuthor} />
       </>
     )
   }
@@ -133,6 +144,7 @@ function App() {
             <Route path="/read" element={<LayoutRead />}></Route>
             <Route path="/author" element={<LayoutAuthor />}></Route>
             <Route path="/category" element={<LayoutCategory />}></Route>
+            <Route path="/all" element={<LayoutAll />}></Route>
           </Routes>
         </div>
       </Router>
@@ -141,4 +153,3 @@ function App() {
 }
 
 export default App;
-{/* <NewsGrid selectedCategory={selectedCategory} sortingType={sortingType} sortingDirection={sortingDirection} setSortingDirection={setSortingDirection} /> */ }

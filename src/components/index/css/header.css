@@ -4,6 +4,7 @@
     display: flex;
     align-content: baseline;
     position: sticky;
+    z-index: 2000;
     top: 0;
     background-color: black;
 }
@@ -33,10 +34,10 @@
 }
 
 .links-row a:hover {
-    color: white;
     border-bottom: 2px solid white;
     transition: .3s ease all;
     cursor: pointer;
+    color: white;
 }
 
 .logo a {
