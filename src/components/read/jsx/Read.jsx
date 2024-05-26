@@ -4,11 +4,19 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import '../css/read.css';
 import LastNews from '../../index/jsx/news/LastNews';
 import ShowAllNews from '../../index/jsx/ShowAllNews';
+import { getFirestore, collection, onSnapshot, query, orderBy, doc, updateDoc } from 'firebase/firestore';
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { app } from '../../../services/Firebase';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faThumbsUp, faThumbsDown } from '@fortawesome/free-solid-svg-icons';
 
 const Read = ({ setSelectedAuthor, setSelectedCategory }) => {
     const [article, setArticle] = useState(null);
     const [error, setError] = useState(null);
+    const [userId, setUserId] = useState(null);
+    const [userReaction, setUserReaction] = useState(null);
 
+    const db = getFirestore(app);
     const location = useLocation();
     const navigate = useNavigate();
     const { id } = location.state || {};
@@ -46,17 +54,72 @@ const Read = ({ setSelectedAuthor, setSelectedCategory }) => {
         fetchArticle();
     }, [id, setArticle]);
 
+    useEffect(() => {
+        const auth = getAuth(app);
+        const unsubscribe = onAuthStateChanged(auth, (user) => {
+            if (user) {
+                setUserId(user.uid);
+            } else {
+                setUserId(null);
+            }
+        });
+
+        return () => unsubscribe();
+    }, []);
+
+    useEffect(() => {
+        if (!app || !db || !id || !article) {
+            return;
+        }
+
+        setUserReaction(article.userReactions?.[userId] || null);
+    }, [id, article, app, db, userId]);
+
     const handleAuthorClick = (author) => {
         navigate('/author');
         setSelectedAuthor(author);
-    }
+    };
 
     const handleCategoryClick = (category) => {
         navigate('/category');
         setSelectedCategory(category);
-    }
+    };
 
-    // render the article data
+    const handleReactionClick = async (reaction) => {
+        if (!app || !db || !id || !article || !userId) {
+            setError('Firebase app or Firestore database is not initialized. Please log in to leave a reaction.');
+            return;
+        }
+
+        // Prevent multiple clicks on the same reaction
+        if (userReaction === reaction) return;
+
+        try {
+            const articleRef = doc(db, 'articles', id);
+            let newRating = article.rating;
+
+            // If the user is changing their reaction, subtract their previous reaction first
+            if (userReaction) {
+                newRating -= userReaction;
+            }
+
+            // Add the new reaction
+            newRating += reaction;
+
+            await updateDoc(articleRef, {
+                rating: newRating,
+                userReactions: {
+                    ...article.userReactions,
+                    [userId]: reaction, // Store the user's reaction in Firestore
+                },
+            });
+
+            setUserReaction(reaction); // Update the local state
+        } catch (error) {
+            setError(`Error updating article: ${error}`);
+        }
+    };
+
     return (
         <div className='read'>
             {article && (
@@ -76,6 +139,7 @@ const Read = ({ setSelectedAuthor, setSelectedCategory }) => {
                             <div className='read-box-info-publishtime'>
                                 <p key={article.id}>&nbsp;&#x2022;&nbsp;{formatDate(new Date(article.publishTime))}</p>
                             </div>
+
                         </div>
                         <div className='read-box-preview'>
                             <img key={article.id} src={article.preview} />
@@ -94,6 +158,14 @@ const Read = ({ setSelectedAuthor, setSelectedCategory }) => {
                             ) : (
                                 <p key={article.id}>{article.content}</p>
                             )}
+                        </div>
+                        <div className='read-box-info-reactions'>
+                            <button onClick={() => handleReactionClick(1)} disabled={userReaction === 1 || !userId}>
+                                <FontAwesomeIcon icon={faThumbsUp} />
+                            </button>
+                            <button onClick={() => handleReactionClick(-1)} disabled={userReaction === -1 || !userId}>
+                                <FontAwesomeIcon icon={faThumbsDown} />
+                            </button>
                         </div>
                         <div className='read-box-comments'>
 

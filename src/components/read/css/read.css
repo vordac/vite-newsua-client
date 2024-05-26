@@ -39,6 +39,7 @@
 .read-box-info {
     display: flex;
     justify-content: center;
+    align-items: center;
 }
 
 .read-box-info-author p {
@@ -55,6 +56,31 @@
 .read-box-info-publishtime p {
     margin: 0;
 }
+
+.read-box-info-reactions{
+    display: flex;
+    margin-left: 16px;
+    justify-content: end;
+}
+
+.read-box-info-reactions button{
+    width: 32px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 4px;
+    background-color: yellow;
+    color: black;
+    border: 2px solid yellow;
+}
+
+.read-box-info-reactions button:disabled{
+    border: 2px solid yellow;
+    background-color: transparent;
+    color: yellow;
+}
+
+
 
 .read-box-preview {
     margin: 32px 0;
