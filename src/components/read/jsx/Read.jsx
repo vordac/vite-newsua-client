@@ -34,7 +34,7 @@ const Read = ({ setSelectedAuthor, setSelectedCategory }) => {
     useEffect(() => {
         async function fetchArticle() {
             try {
-                const response = await axios.get('http://localhost:5000/read', {
+                const response = await axios.get('https://newsua-217e80321b33.herokuapp.com/read', {
                     params: {
                         id: id
                     },
