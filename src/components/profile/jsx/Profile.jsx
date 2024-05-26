@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import '../css/profile.css';
 import { useNavigate } from 'react-router-dom';
+import bcrypt from 'bcryptjs';
 import { getAuth, onAuthStateChanged, updateEmail, updatePassword } from 'firebase/auth';
 import { getFirestore, doc, getDoc, setDoc } from 'firebase/firestore';
 import { app } from '../../../services/Firebase';
@@ -20,8 +21,22 @@ const Profile = () => {
 
     const navigate = useNavigate();
 
-    const handleCancel = () => {
-        navigate('/');
+    const handlePasswordChange = async () => {
+        const result = await Swal.fire({
+            title: 'Зміна паролю',
+            input: 'password',
+            inputPlaceholder: 'Введіть новий пароль',
+            inputAttributes: {
+                autocapitalize: 'off',
+            },
+            showCancelButton: true,
+            confirmButtonText: 'Зберегти',
+            cancelButtonText: 'Скасувати',
+        });
+    
+        if (result.isConfirmed) {
+            setPassword(result.value);
+        }
     };
 
     const handleSave = async () => {
@@ -86,10 +101,6 @@ const Profile = () => {
         }
     };
 
-    const togglePasswordVisibility = () => {
-        setPasswordVisible(!passwordVisible);
-    };
-
     useEffect(() => {
         const auth = getAuth(app);
         const db = getFirestore(app);
@@ -141,34 +152,19 @@ const Profile = () => {
                             Пошта
                             <input type='email' id='email' name='email' value={email} readOnly />
                         </label>
-                        <label htmlFor='password'>
-                            Пароль
-                            <div className='password-input-container'>
-                                <input
-                                    type={passwordVisible ? 'text' : 'password'}
-                                    id='password'
-                                    name='password'
-                                    value={password}
-                                    onChange={handleInputChange}
-                                />
-                                <button type='button' onClick={togglePasswordVisibility} className='password-visibility-toggle'>
-                                    <FontAwesomeIcon icon={passwordVisible ? faEyeSlash : faEye} />
-                                </button>
-                            </div>
-                        </label>
                         <label htmlFor='email'>
                             Роль
                             <input type='role' id='role' name='role' value={role} readOnly />
                         </label>
                         {error && <p className='error'>{error}</p>}
                         <div className='profile-form-buttons'>
-                            <button type='button' onClick={handleCancel}>СКАСУВАТИ</button>
-                            <button type='button' onClick={handleSave} disabled={loading}>ЗБЕРЕГТИ</button>
+                            <button type='button' onClick={handlePasswordChange}>Змінити пароль</button>
+                            <button type='button' onClick={handleSave} disabled={loading}>Зберегти</button>
                         </div>
                     </div>
                 </div>
             ) : (
-                <div>Loading...</div>
+                <div>Завантаження...</div>
             )}
         </div>
     );
