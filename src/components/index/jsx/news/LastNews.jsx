@@ -29,15 +29,9 @@ function LastNews() {
         <div className="news-list-items">
             {
                 Array.isArray(articles) && articles.slice(0, 30).map((article) => (
-                    <Link
-                        key={article.id}
-                        to="/read"
-                        state={{ id: article.id }}
-                    >
-                        <LastNewsItem
-                            article={{ ...article }}
-                        />
-                    </Link>
+                    <LastNewsItem
+                        article={{ ...article }}
+                    />
                 ))
             }
         </div>

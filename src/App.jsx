@@ -21,9 +21,11 @@ import AuthorNews from './components/index/jsx/news/AuthorNews';
 import AuthorHeader from './components/index/jsx/AuthorHeader';
 import AllNews from './components/index/jsx/news/AllNews';
 
+import New from './components/new/jsx/New';
+import Profile from './components/profile/jsx/Profile';
+
 import './components/auth/css/auth.css';
 import './App.css';
-import New from './components/new/jsx/New';
 
 function App() {
 
@@ -129,6 +131,7 @@ function App() {
     return (
       <>
         <Header user={user} auth={auth} selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} sortingType={sortingType} sortingDirection={sortingDirection} setSortingType={setSortingType} setSortingDirection={setSortingDirection} />
+
         <AllNews selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} sortingType={sortingType} setSortingType={setSortingType} sortingDirection={setSortingDirection} setSortingDirection={setSortingDirection} selectedAuthor={selectedAuthor} setSelectedAuthor={setSelectedAuthor} />
       </>
     )
@@ -139,6 +142,14 @@ function App() {
       <div className='new'>
         <New />
       </div>
+    );
+  };
+
+  const LayoutProfile = () => {
+    return (
+      <>
+        <Profile />
+      </>
     );
   };
 
@@ -155,6 +166,7 @@ function App() {
             <Route path="/category" element={<LayoutCategory />}></Route>
             <Route path="/all" element={<LayoutAll />}></Route>
             <Route path="/new" element={<LayoutNew />}></Route>
+            <Route path="/profile" element={<LayoutProfile />} />
           </Routes>
         </div>
       </Router>

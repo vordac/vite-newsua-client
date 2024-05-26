@@ -4,6 +4,7 @@ import '../../css/items/last-news-item.css';
 import { Card } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {faEye} from '@fortawesome/free-solid-svg-icons';
+import { Link } from 'react-router-dom';
 
 const NewsItem = ({ article }) => {
     const navigate = useNavigate();
@@ -18,7 +19,20 @@ const NewsItem = ({ article }) => {
         minute: '2-digit',
     });
 
-    const handleTitleClick = (id) => {
+    const handleReadClick = (id) => {
+        fetch('http://localhost:5000/views', {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ articleId: id }),
+        })
+            .then(response => response.json())
+            .then(data => console.log(data))
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+
         navigate('/read', { state: { id } });
     };
 
@@ -26,7 +40,7 @@ const NewsItem = ({ article }) => {
         <Card className="last-news-item">
             <Card.Body className="last-news-item-body">
                 <div className='last-news-item-upper'>
-                    <Card.Title className="last-news-item-title" onClick={() => handleTitleClick(article.id)}>{title}</Card.Title>
+                    <Card.Title className="last-news-item-title" onClick={() => handleReadClick(article.id)}>{title}</Card.Title>
                 </div>
                 <div className='last-news-item-lower'>
                     <Card.Text className="last-news-item-lower-publishtime">{formattedPublishTime}</Card.Text>

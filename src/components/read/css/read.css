@@ -72,6 +72,13 @@
     background-color: yellow;
     color: black;
     border: 2px solid yellow;
+    transition: .3s ease all;
+}
+
+.read-box-info-reactions button:hover{
+    border: 2px solid yellow;
+    transition: .3s ease all;
+    transform: translateY(4px);
 }
 
 .read-box-info-reactions button:disabled{
@@ -79,8 +86,6 @@
     background-color: transparent;
     color: yellow;
 }
-
-
 
 .read-box-preview {
     margin: 32px 0;
