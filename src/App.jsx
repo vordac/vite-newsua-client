@@ -23,6 +23,7 @@ import AllNews from './components/index/jsx/news/AllNews';
 
 import './components/auth/css/auth.css';
 import './App.css';
+import New from './components/new/jsx/New';
 
 function App() {
 
@@ -133,6 +134,14 @@ function App() {
     )
   }
 
+  const LayoutNew = () => {
+    return (
+      <div className='new'>
+        <New />
+      </div>
+    );
+  };
+
   return (
     <>
       <Router>
@@ -145,6 +154,7 @@ function App() {
             <Route path="/author" element={<LayoutAuthor />}></Route>
             <Route path="/category" element={<LayoutCategory />}></Route>
             <Route path="/all" element={<LayoutAll />}></Route>
+            <Route path="/new" element={<LayoutNew />}></Route>
           </Routes>
         </div>
       </Router>

@@ -14,8 +14,8 @@ function DropdownUser({ auth }) {
     setIsOpen(!isOpen);
   };
 
-  const handleCreateClick = () => {
-    navigate('/create');
+  const handleNewClick = () => {
+    navigate('/new');
   };
 
   const handleProfileClick = () => {
@@ -49,7 +49,7 @@ function DropdownUser({ auth }) {
         <FontAwesomeIcon icon={faUser} />
       </div>
       <div className={`index-dropdown-content ${isOpen ? 'show' : ''}`}>
-        <a onClick={handleCreateClick}>Створити новину</a>
+        <a onClick={handleNewClick}>Створити новину</a>
         <a onClick={handleProfileClick}>Профіль</a>
         <a onClick={handleSignoutClick}>Вийти з акаунту</a>
       </div>

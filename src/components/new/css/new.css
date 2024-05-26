@@ -1,0 +1,136 @@
+.editor{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: white;
+}
+
+.editor-switch{
+  margin: 16px;
+  margin-bottom: 32px;
+}
+
+.editor-switch button{
+  margin: 0 12px;
+}
+
+.editor-container{
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.editor-quill{
+  display: block;
+}
+
+.editor-quill input{
+  margin-bottom: 16px;
+  width: 100%;
+  border: 1px solid black;
+  padding: 8px;
+}
+
+.editor-settings{
+  display: none;
+}
+
+#editor-switch-button-content{
+  color: black;
+  border: 3px solid black;
+  margin: 0 8px;
+  background-color: transparent;
+  color: black;
+  transition: .3s ease all;
+  font-weight: bold;
+}
+
+#editor-switch-button-settings{
+  border: 3px solid transparent;
+  color: black;
+  margin: 0 8px;
+  background-color: transparent;
+  color: black;
+  transition: .3s ease all;
+  font-weight: bold;
+}
+
+.editor-switch-button-publish{
+  background-color: black;
+  color: white;
+  border-radius: 4px;
+  border: 3px solid black;
+  transition: .3s ease all;
+  font-weight: bold;
+}
+
+.editor-switch-button-publish:hover{
+  background-color: white;
+  color: black;
+  border: 3px solid black;
+  transition: .3s ease all;
+}
+
+.editor-media-title{
+  font-size: 20px;
+  font-weight: bold;
+  color: black;
+  text-align: center;
+  margin: 16px 0;
+}
+
+.custom-file-upload {
+  height: 200px;
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: space-between;
+  gap: 20px;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  border: 3px solid black;
+  background-color: white;
+  padding: 1.5rem;
+  border-radius: 10px;
+  box-shadow: 0px 48px 35px -48px #e8e8e8;
+  margin: 8px;
+}
+
+.custom-file-upload .icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.custom-file-upload .icon svg {
+  height: 80px;
+  fill: black;
+}
+
+.custom-file-upload .text {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.custom-file-upload .text span {
+  font-weight: bold;
+  color: black;
+}
+
+.custom-file-upload input {
+  display: none;
+}
+
+.editor-settings select{
+  width: 100%;
+  padding: 8px;
+  border: 2px solid black;
+  border-radius: 0;
+}
+
+.editor-settings select option{
+  color: black;
+  border-radius: 0;
+}
