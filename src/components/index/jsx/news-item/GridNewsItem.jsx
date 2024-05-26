@@ -48,7 +48,6 @@ const GridNewsItem = ({ article, setSelectedCategory, setSelectedAuthor }) => {
 
     return (
         <Card className="news-item">
-            <Card.Text className="news-item-category" onClick={handleCategoryClick}>{category}</Card.Text>
             <Link
                 key={article.id}
                 to="/read"
@@ -57,6 +56,7 @@ const GridNewsItem = ({ article, setSelectedCategory, setSelectedAuthor }) => {
             >
                 <Card.Img src={imageUrl} alt={title} className="news-item-preview" />
             </Link>
+            <Card.Text className="news-item-category" onClick={handleCategoryClick}>{category}</Card.Text>
             <Card.Body className="news-item-body">
                 <div className='news-item-upper'>
                     <Card.Title className="news-item-title" onClick={() => handleReadClick(article.id)}>{title}</Card.Title>

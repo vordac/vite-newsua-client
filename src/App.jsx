@@ -26,6 +26,7 @@ import Profile from './components/profile/jsx/Profile';
 
 import './components/auth/css/auth.css';
 import './App.css';
+import DropdownSort from './components/index/jsx/DropdownSort';
 
 function App() {
 
@@ -131,8 +132,17 @@ function App() {
     return (
       <>
         <Header user={user} auth={auth} selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} sortingType={sortingType} sortingDirection={sortingDirection} setSortingType={setSortingType} setSortingDirection={setSortingDirection} />
-
-        <AllNews selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} sortingType={sortingType} setSortingType={setSortingType} sortingDirection={setSortingDirection} setSortingDirection={setSortingDirection} selectedAuthor={selectedAuthor} setSelectedAuthor={setSelectedAuthor} />
+        <DropdownSort />
+        <AllNews
+          selectedCategory={selectedCategory}
+          setSelectedCategory={setSelectedCategory}
+          sortingType={sortingType}
+          setSortingType={setSortingType}
+          sortingDirection={sortingDirection}
+          setSortingDirection={setSortingDirection}
+          selectedAuthor={selectedAuthor}
+          setSelectedAuthor={setSelectedAuthor}
+        />
       </>
     )
   }

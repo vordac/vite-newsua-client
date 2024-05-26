@@ -9,6 +9,7 @@
     background-color: white;
     color: black;
     border: 1px solid white;
+    user-select: none;
 }
 
 .index-dropdown:focus {
@@ -39,6 +40,7 @@
     z-index: 1000;
     right: 0;
     top: 120%;
+    z-index: 1500;
 }
 
 .index-dropdown-content.show {
@@ -77,4 +79,113 @@
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.sort{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    user-select: none;
+    z-index: 1500;
+    padding: 0 16px;
+}
+
+.sort .index-dropdown {
+    border-radius: 0;
+    margin: 16px 0;
+    font-size: 18px;
+    font-weight: bold;
+    transition: .5s ease all;
+    position: relative;
+    cursor: pointer;
+    background-color: white;
+    color: black;
+    border: 1px solid white;
+}
+
+.sort .index-dropdown:focus {
+    outline: none;
+}
+
+.sort .index-dropdown-icon {
+    border-radius: 1vh;
+    padding: 4px 10px;
+    transition: .5s ease all;
+    cursor: pointer;
+    border: 1px solid white;
+}
+
+.sort .index-dropdown-icon:hover {
+    background-color: black;
+    transition: .5s ease all;
+    color: white;
+    border: 1px solid white;
+    border-radius: 0;
+}
+
+.sort .index-dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: white;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    left: 0;
+    top: 140%;
+    z-index: 1500;
+}
+
+.sort .index-dropdown-content.show {
+    display: block;
+}
+
+.sort .index-dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    font-weight: bold;
+}
+
+.sort .index-dropdown-content a:hover {
+    color: black;
+    background-color: yellow;
+}
+
+.sort .links-row .index-dropdown{
+    background-color: transparent;
+    border: 1px solid transparent;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.sort .links-row .index-dropdown a{
+    border: 0;
+    margin: 0;
+}
+
+.sort .index-dropdown-text{
+    margin: 0;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.date{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.date-button{
+    background-color: white;
+    color: black;
+    padding: 8px;
+    font-weight: bold;
+}
+
+.date-picker{
+    margin: 0 8px;
 }

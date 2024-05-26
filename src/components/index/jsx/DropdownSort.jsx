@@ -1,7 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useNavigate } from 'react';
 import '../css/index-dropdown.css';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSort } from '@fortawesome/free-solid-svg-icons';
 
 function DropdownSort({ sortingType, sortingDirection, setSortingType, setSortingDirection }) {
 
@@ -31,16 +29,15 @@ function DropdownSort({ sortingType, sortingDirection, setSortingType, setSortin
   }, [isOpen]);
 
   return (
-    <div className="index-dropdown">
-      <div className="index-dropdown-icon" onClick={toggleDropdown}>
-        <FontAwesomeIcon icon={faSort} />
-      </div>
-      <div className={`index-dropdown-content ${isOpen ? 'show' : ''}`}>
-        <a onClick={() => handleSortingClick('publishTime', 'desc')}>Нові</a> {/* publishTime, desc */}
-        <a onClick={() => handleSortingClick('publishTime', 'asc')}>Старі</a> {/* publishTime, asc */}
-        <a onClick={() => handleSortingClick('comments', 'desc')}>Обговорювані</a> {/* comments, desc */}
-        <a onClick={() => handleSortingClick('rating', 'desc')}>Рейтингові</a> {/* rating, desc */}
-        <a onClick={() => handleSortingClick('views', 'desc')}>Популярні</a>{/* views, desc */}
+    <div className='sort'>
+      <div className="index-dropdown">
+        <div className="index-dropdown-icon" onClick={toggleDropdown}>Сортування</div>
+        <div className={`index-dropdown-content ${isOpen ? 'show' : ''}`}>
+          <a onClick={() => handleSortingClick('publishTime', 'desc')}>Нові</a> {/* publishTime, desc */}
+          <a onClick={() => handleSortingClick('publishTime', 'asc')}>Старі</a> {/* publishTime, asc */}
+          <a onClick={() => handleSortingClick('rating', 'desc')}>Рейтингові</a> {/* rating, desc */}
+          <a onClick={() => handleSortingClick('views', 'desc')}>Популярні</a>{/* views, desc */}
+        </div>
       </div>
     </div>
   );
