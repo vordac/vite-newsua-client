@@ -1,5 +1,18 @@
 .show-all-news{
     background-color: yellow;
+    border: 2px solid yellow;
     color: black;
     font-weight: bold;
+    padding: 16px;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: .3s ease all;
+    width: 100%;
+}
+
+.show-all-news:hover{
+    background-color: transparent;
+    color: yellow;
+    transition: .3s ease all;
+    cursor: pointer;
 }

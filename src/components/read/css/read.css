@@ -4,7 +4,6 @@
 }
 
 .read-box {
-    width: 70%;
     padding: 0 16px;
 }
 
@@ -59,12 +58,13 @@
 
 .read-box-info-reactions{
     display: flex;
-    margin-left: 16px;
-    justify-content: end;
+    justify-content: start;
+    margin: 16px 0;
 }
 
 .read-box-info-reactions button{
-    width: 32px;
+    padding: 8px;
+    border-radius: 16px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -98,7 +98,6 @@
 }
 
 .read-last {
-    width: 25%;
     padding: 16px;
 }
 
@@ -139,9 +138,9 @@ iframe{
     color: black;
 }
 
-.disqus-message,
-.dsq-content,
-.disqus-comment-text,
-.disqus-thread {
+#disqus-message,
+#dsq-content,
+#disqus-comment-text,
+#disqus-thread {
   color: black !important;
 }

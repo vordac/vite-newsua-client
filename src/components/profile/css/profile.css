@@ -62,6 +62,7 @@
 }
 
 .profile-form-buttons button {
+    padding: 8px;
     border-radius: 4px;
     width: 100%;
     border: 2px solid yellow;
