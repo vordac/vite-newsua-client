@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Route, Routes, Outlet, useNavigate } from 'rea
 import { useState, useEffect } from 'react';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { app } from './services/Firebase';
+import axios from 'axios';
 
 import Header from './components/index/jsx/Header';
 import SignInForm from './components/auth/jsx/SignInForm';
@@ -28,6 +29,9 @@ import './components/auth/css/auth.css';
 import './App.css';
 import DropdownSort from './components/index/jsx/DropdownSort';
 
+import MyNews from './components/mynews/jsx/MyNews';
+import Admin from './components/admin/jsx/Admin';
+
 function App() {
 
   const [user, setUser] = useState('');
@@ -37,6 +41,10 @@ function App() {
   const [selectedAuthor, setSelectedAuthor] = useState();
   const [sortingType, setSortingType] = useState('publishTime');
   const [sortingDirection, setSortingDirection] = useState('desc');
+  const [userUID, setUserUID] = useState('');
+  const [userRole, setUserRole] = useState('');
+  const [myNewsTab, setMyNewsTab] = useState(1);
+  const [userNickname, setUserNickname] = useState('');
 
   useEffect(() => {
     const auth = getAuth(app); // get auth instance
@@ -45,14 +53,59 @@ function App() {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         setUser(user);
+        // console.log(user);
+        setUserUID(user.uid);
       } else {
         setUser(null);
       }
     });
 
+
+
+
     return () => unsubscribe();
   }, []);
 
+  useEffect(() => {
+    async function getUserRole() {
+      if (userUID) { // only fetch user role if userUID is not an empty string
+        try {
+          const response = await axios.get('http://localhost:5000/get-user-role', {
+            params: {
+              id: userUID
+            },
+          });
+          console.log(response.data.role);
+          setUserRole(response.data.role);
+          console.log(userRole);
+        } catch (error) {
+          console.error('Error fetching role:', error);
+          setError('Error fetching role');
+        }
+      }
+    }
+    getUserRole();
+  }, [userUID]);
+
+  useEffect(() => {
+    async function getUserNickname() {
+      if (userUID) { 
+        try {
+          const response = await axios.get('http://localhost:5000/get-user-nickname', {
+            params: {
+              id: userUID
+            },
+          });
+          console.log(`nickname: ${response.data.username}`);
+          setUserNickname(response.data.username);
+        } catch (error) {
+          console.error('Error fetching nickname:', error);
+          setError('Error fetching nickname');
+        }
+      }
+    }
+    getUserNickname();
+  }, [userUID]);
 
   const LayoutIndex = () => {
     return (
@@ -60,7 +113,7 @@ function App() {
         <div className='index-divider'></div>
         <div className='index-content'>
           <div className='index-header'>
-            <Header user={user} auth={auth} selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} sortingType={sortingType} sortingDirection={sortingDirection} setSortingType={setSortingType} setSortingDirection={setSortingDirection} />
+            <Header user={user} userRole={userRole} auth={auth} selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} sortingType={sortingType} sortingDirection={sortingDirection} setSortingType={setSortingType} setSortingDirection={setSortingDirection} />
           </div>
           <div className='index-news'>
             <div className='index-news-last'>
@@ -87,13 +140,15 @@ function App() {
 
   const LayoutLogin = () => {
     return (
-      <SignInForm setUser={setUser} />
+      <div className='layout-login'>
+        <SignInForm setUser={setUser} user={user} />
+      </div>
     );
   };
 
   const LayoutRegister = () => {
     return (
-      <div className='auth'>
+      <div className='layout-register'>
         <SignUpForm />
       </div>
     );
@@ -102,7 +157,7 @@ function App() {
   const LayoutRead = () => {
     return (
       <>
-        <Header user={user} auth={auth} selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} sortingType={sortingType} sortingDirection={sortingDirection} setSortingType={setSortingType} setSortingDirection={setSortingDirection} />
+        <Header user={user} userRole={userRole} auth={auth} selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} sortingType={sortingType} sortingDirection={sortingDirection} setSortingType={setSortingType} setSortingDirection={setSortingDirection} />
         <Read setSelectedAuthor={setSelectedAuthor} setSelectedCategory={setSelectedCategory} />
       </>
     );
@@ -111,10 +166,10 @@ function App() {
   const LayoutAuthor = () => {
     return (
       <>
-        <Header user={user} auth={auth} selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} sortingType={sortingType} sortingDirection={sortingDirection} setSortingType={setSortingType} setSortingDirection={setSortingDirection} />
+        <Header user={user} userRole={userRole} auth={auth} selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} sortingType={sortingType} sortingDirection={sortingDirection} setSortingType={setSortingType} setSortingDirection={setSortingDirection} />
         <AuthorHeader selectedAuthor={selectedAuthor} />
-        <DropdownSort sortingType={sortingType} sortingDirection={sortingDirection} setSortingType={setSortingType} setSortingDirection={setSortingDirection} /> 
-        <AuthorNews selectedAuthor={selectedAuthor} setSelectedAuthor={setSelectedAuthor} selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} sortingType={sortingType} sortingDirection={sortingDirection} setSortingDirection={setSortingDirection}  />
+        <DropdownSort sortingType={sortingType} sortingDirection={sortingDirection} setSortingType={setSortingType} setSortingDirection={setSortingDirection} />
+        <AuthorNews selectedAuthor={selectedAuthor} setSelectedAuthor={setSelectedAuthor} selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} sortingType={sortingType} sortingDirection={sortingDirection} setSortingDirection={setSortingDirection} />
       </>
     )
   }
@@ -122,9 +177,9 @@ function App() {
   const LayoutCategory = () => {
     return (
       <>
-        <Header user={user} auth={auth} selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} sortingType={sortingType} sortingDirection={sortingDirection} setSortingType={setSortingType} setSortingDirection={setSortingDirection} />
+        <Header user={user} userRole={userRole} auth={auth} selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} sortingType={sortingType} sortingDirection={sortingDirection} setSortingType={setSortingType} setSortingDirection={setSortingDirection} />
         <CategoryHeader selectedCategory={selectedCategory} />
-        <DropdownSort sortingType={sortingType} sortingDirection={sortingDirection} setSortingType={setSortingType} setSortingDirection={setSortingDirection} /> 
+        <DropdownSort sortingType={sortingType} sortingDirection={sortingDirection} setSortingType={setSortingType} setSortingDirection={setSortingDirection} />
         <CategoryNews selectedAuthor={selectedAuthor} setSelectedAuthor={setSelectedAuthor} selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} sortingType={sortingType} sortingDirection={sortingDirection} setSortingDirection={setSortingDirection} setArticleID={setArticleID} />
       </>
     )
@@ -133,8 +188,8 @@ function App() {
   const LayoutAll = () => {
     return (
       <>
-        <Header user={user} auth={auth} selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} sortingType={sortingType} sortingDirection={sortingDirection} setSortingType={setSortingType} setSortingDirection={setSortingDirection} />
-        <DropdownSort sortingType={sortingType} sortingDirection={sortingDirection} setSortingType={setSortingType} setSortingDirection={setSortingDirection} /> 
+        <Header user={user} userRole={userRole} auth={auth} selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} sortingType={sortingType} sortingDirection={sortingDirection} setSortingType={setSortingType} setSortingDirection={setSortingDirection} />
+        <DropdownSort sortingType={sortingType} sortingDirection={sortingDirection} setSortingType={setSortingType} setSortingDirection={setSortingDirection} />
         <AllNews selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} sortingType={sortingType} setSortingType={setSortingType} sortingDirection={sortingDirection} setSortingDirection={setSortingDirection} selectedAuthor={selectedAuthor} setSelectedAuthor={setSelectedAuthor} />
       </>
     )
@@ -156,6 +211,32 @@ function App() {
     );
   };
 
+  const LayoutMyNews = () => {
+    return (
+      <div className='my-news'>
+        <Header user={user} userRole={userRole} auth={auth} selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} sortingType={sortingType} sortingDirection={sortingDirection} setSortingType={setSortingType} setSortingDirection={setSortingDirection} />
+        <MyNews myNewsTab={myNewsTab} userNickname={userNickname} setMyNewsTab={setMyNewsTab}/>
+      </div>
+    )
+  }
+
+  const LayoutAdmin = () => {
+    return (
+      <div className='admin'>
+        <Header user={user} userRole={userRole} auth={auth} selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} sortingType={sortingType} sortingDirection={sortingDirection} setSortingType={setSortingType} setSortingDirection={setSortingDirection} />
+        <Admin userRole={userRole}/>
+      </div>
+    )
+  }
+
+  const LayoutModer = () => {
+    return (
+      <div className='moder'>
+        moder
+      </div>
+    )
+  }
+
   return (
     <>
       <Router>
@@ -170,6 +251,9 @@ function App() {
             <Route path="/all" element={<LayoutAll />}></Route>
             <Route path="/new" element={<LayoutNew />}></Route>
             <Route path="/profile" element={<LayoutProfile />} />
+            <Route path="/my-news" element={<LayoutMyNews />}></Route>
+            <Route path="/admin" element={<LayoutAdmin />}></Route>
+            <Route path="/moder" element={<LayoutModer />} />
           </Routes>
         </div>
       </Router>

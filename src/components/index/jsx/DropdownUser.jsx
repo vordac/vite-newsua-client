@@ -4,7 +4,7 @@ import '../css/index-dropdown.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
 
-function DropdownUser({ auth }) {
+function DropdownUser({ auth, userRole }) {
 
   const navigate = useNavigate();
 
@@ -12,6 +12,7 @@ function DropdownUser({ auth }) {
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
+    console.log(userRole);
   };
 
   const handleNewClick = () => {
@@ -19,7 +20,7 @@ function DropdownUser({ auth }) {
   };
 
   const handleProfileClick = () => {
-      navigate('/profile');
+    navigate('/profile');
   };
 
   const handleSignoutClick = () => {
@@ -28,6 +29,18 @@ function DropdownUser({ auth }) {
       navigate('/');
     }
   };
+
+  const handleMyNewsClick = () => {
+    navigate('/my-news');
+  }
+
+  const handleAdminPanelClick = () => {
+    navigate('/admin');
+  }
+
+  const handleModerPanelClick = () => {
+    navigate('/moder');
+  }
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -43,18 +56,53 @@ function DropdownUser({ auth }) {
     };
   }, [isOpen]);
 
-  return (
-    <div className="index-dropdown">
-      <div className="index-dropdown-icon" onClick={toggleDropdown}>
-        <FontAwesomeIcon icon={faUser} />
+  if (userRole === 'admin') {
+    return (
+      <div className="index-dropdown">
+        <div className="index-dropdown-icon" onClick={toggleDropdown}>
+          <FontAwesomeIcon icon={faUser} />
+        </div>
+        <div className={`index-dropdown-content ${isOpen ? 'show' : ''}`}>
+          <a onClick={handleNewClick}>Створити новину</a>
+          <a onClick={handleProfileClick}>Профіль</a>
+          <a onClick={handleMyNewsClick}>Мої новини</a>
+          <a onClick={handleAdminPanelClick}>Панель адміна</a>
+          <a onClick={handleSignoutClick}>Вийти з акаунту</a>
+        </div>
       </div>
-      <div className={`index-dropdown-content ${isOpen ? 'show' : ''}`}>
-        <a onClick={handleNewClick}>Створити новину</a>
-        <a onClick={handleProfileClick}>Профіль</a>
-        <a onClick={handleSignoutClick}>Вийти з акаунту</a>
+    )
+  } else if (userRole === 'moderator') {
+    return (
+      <div className="index-dropdown">
+        <div className="index-dropdown-icon" onClick={toggleDropdown}>
+          <FontAwesomeIcon icon={faUser} />
+        </div>
+        <div className={`index-dropdown-content ${isOpen ? 'show' : ''}`}>
+          <a onClick={handleNewClick}>Створити новину</a>
+          <a onClick={handleProfileClick}>Профіль</a>
+          <a onClick={handleMyNewsClick}>Мої новини</a>
+          <a onClick={handleModerPanelClick}>Панель модера</a>
+          <a onClick={handleSignoutClick}>Вийти з акаунту</a>
+        </div>
       </div>
-    </div>
-  );
+    )
+  } else {
+    return (
+      <div className="index-dropdown">
+        <div className="index-dropdown-icon" onClick={toggleDropdown}>
+          <FontAwesomeIcon icon={faUser} />
+        </div>
+        <div className={`index-dropdown-content ${isOpen ? 'show' : ''}`}>
+          <a onClick={handleNewClick}>Створити новину</a>
+          <a onClick={handleProfileClick}>Профіль</a>
+          <a onClick={handleMyNewsClick}>Мої новини</a>
+          <a onClick={handleSignoutClick}>Вийти з акаунту</a>
+        </div>
+      </div>
+    );
+  }
+
+
 }
 
 export default DropdownUser;

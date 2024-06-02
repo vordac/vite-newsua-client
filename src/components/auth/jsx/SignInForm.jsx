@@ -8,7 +8,7 @@ import '../css/auth.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faA, faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 
-const SignInForm = ({ setUser }) => {
+const SignInForm = ({ setUser, user }) => {
   const auth = getAuth(app);
   const [signinEmail, setSigninEmail] = useState('');
   const [signinPassword, setSigninPassword] = useState('');

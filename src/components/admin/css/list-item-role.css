@@ -1,0 +1,36 @@
+.list-item-role{
+    display: flex;
+    margin: 16px;
+    background-color: white;
+    color: black;
+    padding: 8px;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.list-item-role-info{
+    display: flex;
+    align-items: center;
+}
+
+.list-item-role-info-username,
+.list-item-role-info-email{
+    margin: 0 8px;
+}
+
+.list-item-role-controls button{
+    background-color: black;
+    border-radius: 0;
+    padding: 4px;
+    border: 2px solid black;
+    transition: .3s ease all;
+    color: white;
+    margin: 0 4px;
+}
+
+.list-item-role-controls button:hover{
+    background-color: transparent;
+    transition: .3s ease all;
+    color: black;
+    cursor: pointer;
+}

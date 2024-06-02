@@ -22,3 +22,10 @@ body {
   color: black;
 }
 
+.layout-login{
+  height: 100vh;
+}
+
+.layout-register{
+  height: 100vh;
+}

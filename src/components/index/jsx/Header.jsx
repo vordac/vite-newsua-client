@@ -8,7 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSort, faSearch, faCaretDown } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
 
-const Header = ({ user, auth, selectedCategory, sortingType, sortingDirection, setSelectedCategory, setSortingType, setSortingDirection }) => {
+const Header = ({ user, userRole, auth, selectedCategory, sortingType, sortingDirection, setSelectedCategory, setSortingType, setSortingDirection }) => {
 
     const navigate = useNavigate();
 
@@ -67,7 +67,7 @@ const Header = ({ user, auth, selectedCategory, sortingType, sortingDirection, s
                     </div> */}
                     <div className='auth-controller'>
                         {user ? (
-                            <DropdownUser auth={auth} />
+                            <DropdownUser auth={auth} userRole={userRole}/>
                         ) : (
                             <DropdownAuth />
                         )}

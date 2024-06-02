@@ -1,0 +1,35 @@
+.tab{
+    background-color: black;
+    height: 100vh;
+}
+
+.tab-controls{
+    display: flex;
+    justify-content: space-between;
+}
+
+.tab-controls button{
+    background-color: transparent;
+    border: none;
+    padding: 16px;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    transition: .3s;
+    cursor: pointer;
+}
+
+.tab-controls button:hover{
+    color: yellow;
+    text-decoration: underline;
+    transition: .3s;
+    cursor: pointer;
+}
+
+.tab-controls-roles{
+    display: flex;
+}
+
+.tab-controls-news{
+    display: flex;
+}
