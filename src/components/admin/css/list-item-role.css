@@ -21,7 +21,7 @@
 .list-item-role-controls button{
     background-color: black;
     border-radius: 0;
-    padding: 4px;
+    padding: 8px;
     border: 2px solid black;
     transition: .3s ease all;
     color: white;

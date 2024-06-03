@@ -4,7 +4,7 @@ import { Card } from 'react-bootstrap';
 import '../css/list-item-role.css';
 import axios from 'axios';
 
-const ListItemAuthors = ({ key, element, setAuthors, setRefreshRate }) => {
+const ListItemAuthors = ({ key, element, setAuthors, refreshRate, setRefreshRate }) => {
     const navigate = useNavigate();
 
     const { email, role, uid, username } = element;
@@ -15,7 +15,7 @@ const ListItemAuthors = ({ key, element, setAuthors, setRefreshRate }) => {
             const response = await axios.put(`http://localhost:5000/admin-block-user?uid=${uid}`);
             console.log(response.data);
             setAuthors(prevAuthors => prevAuthors.map(author => author.uid === uid ? { ...author, isBlocked: true } : author));
-            setRefreshRate(1);
+            setRefreshRate(refreshRate + 1);
             setIsBlocked(true);
         } catch (error) {
             console.log(error);
@@ -28,7 +28,7 @@ const ListItemAuthors = ({ key, element, setAuthors, setRefreshRate }) => {
             const response = await axios.put(`http://localhost:5000/admin-unblock-user?uid=${uid}`);
             console.log(response.data);
             setAuthors(prevAuthors => prevAuthors.map(author => author.uid === uid ? { ...author, isBlocked: false } : author));
-            setRefreshRate(1);
+            setRefreshRate(refreshRate + 1);
         } catch (error) {
             console.log(error);
         }

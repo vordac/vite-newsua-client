@@ -4,8 +4,9 @@ import ListItemAuthors from './ListItemAuthors';
 
 import axios from 'axios';
 import ListItemModerators from './ListItemModerators';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faRefresh } from '@fortawesome/free-solid-svg-icons';
+import ListItemPublished from './ListItemPublished';
+import ListItemModerated from './ListItemModerated';
+import ListItemRejected from './ListItemRejected';
 
 const Admin = ({ userRole }) => {
 
@@ -64,9 +65,6 @@ const Admin = ({ userRole }) => {
     async function fetchPublishedArticles() {
         try {
             const response = await axios.get('http://localhost:5000/admin-get-published', {
-                params: {
-                    userNickname: userNickname,
-                },
             });
             setArticlesPublished(response.data);
             console.log(response.data);
@@ -79,11 +77,6 @@ const Admin = ({ userRole }) => {
     async function fetchModeratedArticles() {
         try {
             const response = await axios.get('http://localhost:5000/admin-get-moderated', {
-                params: {
-                    params: {
-                        author: userNickname,
-                    },
-                },
             });
             setArticlesModerated(response.data);
         } catch (error) {
@@ -95,11 +88,6 @@ const Admin = ({ userRole }) => {
     async function fetchRejectedArticles() {
         try {
             const response = await axios.get('http://localhost:5000/admin-get-rejected', {
-                params: {
-                    params: {
-                        author: userNickname,
-                    },
-                },
             });
             setArticlesRejected(response.data);
         } catch (error) {
@@ -107,13 +95,12 @@ const Admin = ({ userRole }) => {
         }
     }
 
-    const handleAdminRefresh = () => {
-        setRefreshRate(1);
-    }
-
     useEffect(() => {
         fetchAuthors();
-        fetchModerators()
+        fetchModerators();
+        fetchPublishedArticles();
+        fetchModeratedArticles();
+        fetchRejectedArticles();
         setIsLoading(false);
     }, [userRole, refreshRate]);
 
@@ -143,7 +130,9 @@ const Admin = ({ userRole }) => {
                                     key={element.uid}
                                     element={{ ...element }}
                                     setAuthors={setAuthors}
+                                    refreshRate={refreshRate}
                                     setRefreshRate={setRefreshRate}
+                                    setIsBlocked={setIsBlocked}
                                 />
                             ))
                         }
@@ -171,6 +160,7 @@ const Admin = ({ userRole }) => {
                                     key={element.uid}
                                     element={{ ...element }}
                                     setModerators={setModerators}
+                                    refreshRate={refreshRate}
                                     setRefreshRate={setRefreshRate}
                                     setIsBlocked={setIsBlocked}
                                 />
@@ -182,7 +172,6 @@ const Admin = ({ userRole }) => {
         } else if (tab === 3) {
             return (
                 <div className='tab'>
-                    <div>Вітаю, {userRole} 3</div>
                     <div className='tab-controls'>
                         <div className='tab-controls-roles'>
                             <button onClick={handleFirstTabClick}>Автори</button>
@@ -195,14 +184,21 @@ const Admin = ({ userRole }) => {
                         </div>
                     </div>
                     <div className='tab-published'>
-
+                        {
+                            Array.isArray(articlesPublished) && articlesPublished.map((article) => (
+                                <ListItemPublished
+                                    article={{ ...article, imageUrl: article.preview }}
+                                    refreshRate={refreshRate}
+                                    setRefreshRate={setRefreshRate}
+                                />
+                            ))
+                        }
                     </div>
                 </div>
             );
         } else if (tab === 4) {
             return (
                 <div className='tab'>
-                    <div>Вітаю, {userRole} 4</div>
                     <div className='tab-controls'>
                         <div className='tab-controls-roles'>
                             <button onClick={handleFirstTabClick}>Автори</button>
@@ -215,14 +211,21 @@ const Admin = ({ userRole }) => {
                         </div>
                     </div>
                     <div className='tab-moderated'>
-
+                        {
+                            Array.isArray(articlesModerated) && articlesModerated.map((article) => (
+                                <ListItemModerated
+                                    article={{ ...article, imageUrl: article.preview }}
+                                    refreshRate={refreshRate}
+                                    setRefreshRate={setRefreshRate}
+                                />
+                            ))
+                        }
                     </div>
                 </div>
             );
         } else if (tab === 5) {
             return (
                 <div className='tab'>
-                    <div>Вітаю, {userRole} 5</div>
                     <div className='tab-controls'>
                         <div className='tab-controls-roles'>
                             <button onClick={handleFirstTabClick}>Автори</button>
@@ -235,7 +238,15 @@ const Admin = ({ userRole }) => {
                         </div>
                     </div>
                     <div className='tab-rejected'>
-
+                        {
+                            Array.isArray(articlesRejected) && articlesRejected.map((article) => (
+                                <ListItemRejected
+                                    article={{ ...article, imageUrl: article.preview }}
+                                    refreshRate={refreshRate}
+                                    setRefreshRate={setRefreshRate}
+                                />
+                            ))
+                        }
                     </div>
                 </div>
             );

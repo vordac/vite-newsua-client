@@ -31,6 +31,7 @@ import DropdownSort from './components/index/jsx/DropdownSort';
 
 import MyNews from './components/mynews/jsx/MyNews';
 import Admin from './components/admin/jsx/Admin';
+import Moderator from './components/admin/jsx/Moderator';
 
 function App() {
 
@@ -232,7 +233,8 @@ function App() {
   const LayoutModer = () => {
     return (
       <div className='moder'>
-        moder
+        <Header user={user} userRole={userRole} auth={auth} selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} sortingType={sortingType} sortingDirection={sortingDirection} setSortingType={setSortingType} setSortingDirection={setSortingDirection} />
+        <Moderator userRole={userRole}/>
       </div>
     )
   }

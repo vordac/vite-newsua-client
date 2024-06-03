@@ -1,0 +1,97 @@
+
+.tab-published,
+.tab-moderated,
+.tab-rejected{
+    padding: 16px;
+}
+
+.list-item-news-item{
+    width: 100%;
+    height: 100%;
+    margin: 16px 0;
+    padding: 16px 0;
+    background-color: white;
+    color: black;
+}
+
+.list-item-news-item-preview{
+}
+
+.list-item-news-item-preview img{
+}
+
+.list-item-news-item-category{
+
+}
+
+.list-item-news-item-body{
+    display: flex;
+    flex-direction: column;
+    padding: 16px;
+}
+
+/* .list-item-news-item-body-left{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+} */
+
+.list-item-news-item-upper{
+
+}
+
+.list-item-news-item-title{
+    font-size: 24px;
+}
+
+.list-item-news-item-title:hover{
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.list-item-news-item-lower{
+
+}
+
+.list-item-news-item-lower-info{
+
+}
+
+.list-item-news-item-lower-info-author{
+
+}
+
+.list-item-news-item-lower-info-box{
+
+}
+
+.list-item-news-item-lower-info-box-views{
+
+}
+
+.list-item-news-item-lower-info-box-publishtime{
+
+}
+
+.list-item-news-item-body-right select{
+    padding: 8px;
+    background-color: transparent;
+    border: 2px solid black;
+}
+
+.list-item-news-item-body-right button{
+    background-color: black;
+    padding: 8px;
+    border: 2px solid black;
+    color: white;
+    margin: 0 8px;
+    border-radius: 0;
+    transition: .3s ease all;
+}
+
+.list-item-news-item-body-right button:hover{
+    background-color: transparent;
+    color: black;
+    transition: .3s ease all;
+    cursor: pointer;
+}

@@ -3,6 +3,7 @@
   flex-direction: column;
   align-items: center;
   background-color: white;
+  height: 10000vh;
 }
 
 .editor-switch{
