@@ -1,19 +1,40 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { app } from '../../../services/Firebase';
 import Swal from 'sweetalert2';
+import axios from 'axios';
 import '../css/auth.css';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faA, faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 
-const SignInForm = ({ setUser, user }) => {
+const SignInForm = ({ setUser, user, setIsUserBlocked }) => {
   const auth = getAuth(app);
   const [signinEmail, setSigninEmail] = useState('');
   const [signinPassword, setSigninPassword] = useState('');
 
   const navigate = useNavigate();
+
+  const checkIfUserIsBlocked = async (email) => {
+    try {
+      const response = await axios.get("http://localhost:5000/is-user-blocked", {
+        params: {
+          email: email,
+        },
+      });
+      setIsUserBlocked(response.data.isBlocked);
+      localStorage.setItem("isBlocked", response.data.isBlocked);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    if (user && user.email) {
+      checkIfUserIsBlocked(user.email);
+    }
+  }, [user]);
 
   const handleSigninSubmit = async (event) => {
     event.preventDefault();
@@ -22,6 +43,9 @@ const SignInForm = ({ setUser, user }) => {
         await signInWithEmailAndPassword(auth, signinEmail, signinPassword);
         Swal.fire("Авторизація успішна", "", "success");
         setUser(auth.currentUser);
+
+        checkIfUserIsBlocked(auth.currentUser.email);
+
         navigate('/');
       } catch (error) {
         Swal.fire("Помилка входу", error.message, "error");
@@ -46,10 +70,9 @@ const SignInForm = ({ setUser, user }) => {
         <button className='auth-signin-form-signup' onClick={handleRegClick}>Ще немає акаунту?</button>
       </form>
       <div className='auth-back'>
-          <button><FontAwesomeIcon icon={faArrowLeft} onClick={handleBackClick} /></button>
-        </div>
+        <button><FontAwesomeIcon icon={faArrowLeft} onClick={handleBackClick} /></button>
+      </div>
     </div>
-
   );
 }
 

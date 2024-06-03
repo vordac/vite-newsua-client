@@ -1,0 +1,33 @@
+.blocked{
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    width: 100vw;
+    justify-content: center;
+    align-items: center;
+}
+
+.blocked button{
+    background-color: white;
+    border: 2px solid white;
+    border-radius: 0;
+    padding: 8px;
+    font-weight: bold;
+    transition: .3s ease all;
+    margin: 16px;
+}
+
+.blocked button:hover{
+    background-color: transparent;
+    border: 2px solid white;
+    border-radius: 0;
+    padding: 8px;
+    font-weight: bold;
+    transition: .3s ease all;
+    color: white;
+    cursor: pointer;
+}
+
+.blocked p{
+    margin: 8px;
+}

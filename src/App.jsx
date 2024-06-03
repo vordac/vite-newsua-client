@@ -4,37 +4,34 @@ import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { app } from './services/Firebase';
 import axios from 'axios';
 
+// Import your components
 import Header from './components/index/jsx/Header';
 import SignInForm from './components/auth/jsx/SignInForm';
 import SignUpForm from './components/auth/jsx/SignUpForm';
 import Read from './components/read/jsx/Read';
-
 import LastNews from './components/index/jsx/news/LastNews';
 import MainNews from './components/index/jsx/news/MainNews';
 import PopularNews from './components/index/jsx/news/PopularNews';
 import UkrainianNews from './components/index/jsx/news/UkrainianNews';
 import WorldNews from './components/index/jsx/news/WorldNews';
 import ShowAllNews from './components/index/jsx/ShowAllNews';
-
 import CategoryNews from './components/index/jsx/news/CategoryNews';
 import CategoryHeader from './components/index/jsx/CategoryHeader';
 import AuthorNews from './components/index/jsx/news/AuthorNews';
 import AuthorHeader from './components/index/jsx/AuthorHeader';
 import AllNews from './components/index/jsx/news/AllNews';
-
 import New from './components/new/jsx/New';
 import Profile from './components/profile/jsx/Profile';
+import MyNews from './components/mynews/jsx/MyNews';
+import Admin from './components/admin/jsx/Admin';
+import Moderator from './components/admin/jsx/Moderator';
+import Blocked from './components/blocked/jsx/Blocked';
 
 import './components/auth/css/auth.css';
 import './App.css';
 import DropdownSort from './components/index/jsx/DropdownSort';
 
-import MyNews from './components/mynews/jsx/MyNews';
-import Admin from './components/admin/jsx/Admin';
-import Moderator from './components/admin/jsx/Moderator';
-
 function App() {
-
   const [user, setUser] = useState('');
   const [auth, setAuth] = useState(null);
   const [articleID, setArticleID] = useState();
@@ -46,42 +43,38 @@ function App() {
   const [userRole, setUserRole] = useState('');
   const [myNewsTab, setMyNewsTab] = useState(1);
   const [userNickname, setUserNickname] = useState('');
+  const [isUserBlocked, setIsUserBlocked] = useState(false);
+  const [userEmail, setUserEmail] = useState("");
 
   useEffect(() => {
-    const auth = getAuth(app); // get auth instance
+    const auth = getAuth(app);
     setAuth(auth);
 
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         setUser(user);
-        // console.log(user);
         setUserUID(user.uid);
+        setUserEmail(user.email);
       } else {
         setUser(null);
       }
     });
-
-
-
 
     return () => unsubscribe();
   }, []);
 
   useEffect(() => {
     async function getUserRole() {
-      if (userUID) { // only fetch user role if userUID is not an empty string
+      if (userUID) {
         try {
           const response = await axios.get('http://localhost:5000/get-user-role', {
             params: {
               id: userUID
             },
           });
-          console.log(response.data.role);
           setUserRole(response.data.role);
-          console.log(userRole);
         } catch (error) {
           console.error('Error fetching role:', error);
-          setError('Error fetching role');
         }
       }
     }
@@ -90,23 +83,50 @@ function App() {
 
   useEffect(() => {
     async function getUserNickname() {
-      if (userUID) { 
+      if (userUID) {
         try {
           const response = await axios.get('http://localhost:5000/get-user-nickname', {
             params: {
               id: userUID
             },
           });
-          console.log(`nickname: ${response.data.username}`);
           setUserNickname(response.data.username);
         } catch (error) {
           console.error('Error fetching nickname:', error);
-          setError('Error fetching nickname');
         }
       }
     }
     getUserNickname();
   }, [userUID]);
+
+  // Create a function to check if the user is blocked
+  const checkIfUserIsBlocked = async (email) => {
+    try {
+      const response = await axios.get("http://localhost:5000/is-user-blocked", {
+        params: {
+          email: email,
+        },
+      });
+      setIsUserBlocked(response.data.isBlocked);
+      localStorage.setItem("isBlocked", response.data.isBlocked);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  // Call the function when the component mounts
+  useEffect(() => {
+    if (user && user.email) {
+      checkIfUserIsBlocked(user.email);
+    }
+  }, [user]);
+
+  const handleSignoutClick = () => {
+    if (auth) {
+      auth.signOut();
+      navigate('/');
+    }
+  };
 
   const LayoutIndex = () => {
     return (
@@ -142,7 +162,7 @@ function App() {
   const LayoutLogin = () => {
     return (
       <div className='layout-login'>
-        <SignInForm setUser={setUser} user={user} />
+        <SignInForm setUser={setUser} user={user} setIsUserBlocked={setIsUserBlocked} />
       </div>
     );
   };
@@ -216,7 +236,7 @@ function App() {
     return (
       <div className='my-news'>
         <Header user={user} userRole={userRole} auth={auth} selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} sortingType={sortingType} sortingDirection={sortingDirection} setSortingType={setSortingType} setSortingDirection={setSortingDirection} />
-        <MyNews myNewsTab={myNewsTab} userNickname={userNickname} setMyNewsTab={setMyNewsTab}/>
+        <MyNews myNewsTab={myNewsTab} userNickname={userNickname} setMyNewsTab={setMyNewsTab} />
       </div>
     )
   }
@@ -225,7 +245,7 @@ function App() {
     return (
       <div className='admin'>
         <Header user={user} userRole={userRole} auth={auth} selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} sortingType={sortingType} sortingDirection={sortingDirection} setSortingType={setSortingType} setSortingDirection={setSortingDirection} />
-        <Admin userRole={userRole}/>
+        <Admin userRole={userRole} />
       </div>
     )
   }
@@ -234,33 +254,41 @@ function App() {
     return (
       <div className='moder'>
         <Header user={user} userRole={userRole} auth={auth} selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} sortingType={sortingType} sortingDirection={sortingDirection} setSortingType={setSortingType} setSortingDirection={setSortingDirection} />
-        <Moderator userRole={userRole}/>
+        <Moderator userRole={userRole} />
       </div>
     )
   }
 
-  return (
-    <>
-      <Router>
-        <div className="App">
-          <Routes>
-            <Route path="/" element={<LayoutIndex />}></Route>
-            <Route path="/login" element={<LayoutLogin />}></Route>
-            <Route path="/register" element={<LayoutRegister />}></Route>
-            <Route path="/read" element={<LayoutRead />}></Route>
-            <Route path="/author" element={<LayoutAuthor />}></Route>
-            <Route path="/category" element={<LayoutCategory />}></Route>
-            <Route path="/all" element={<LayoutAll />}></Route>
-            <Route path="/new" element={<LayoutNew />}></Route>
-            <Route path="/profile" element={<LayoutProfile />} />
-            <Route path="/my-news" element={<LayoutMyNews />}></Route>
-            <Route path="/admin" element={<LayoutAdmin />}></Route>
-            <Route path="/moder" element={<LayoutModer />} />
-          </Routes>
-        </div>
-      </Router>
-    </>
-  );
+  if (isUserBlocked) {
+    return (
+      <Blocked handleSignoutClick={handleSignoutClick}/>
+    )
+  } else {
+    return (
+      <>
+        <Router>
+          <div className="App">
+            <Routes>
+              <Route path="/" element={<LayoutIndex />}></Route>
+              <Route path="/login" element={<LayoutLogin />}></Route>
+              <Route path="/register" element={<LayoutRegister />}></Route>
+              <Route path="/read" element={<LayoutRead />}></Route>
+              <Route path="/author" element={<LayoutAuthor />}></Route>
+              <Route path="/category" element={<LayoutCategory />}></Route>
+              <Route path="/all" element={<LayoutAll />}></Route>
+              <Route path="/new" element={<LayoutNew />}></Route>
+              <Route path="/profile" element={<LayoutProfile />} />
+              <Route path="/my-news" element={<LayoutMyNews />}></Route>
+              <Route path="/admin" element={<LayoutAdmin />}></Route>
+              <Route path="/moder" element={<LayoutModer />} />
+            </Routes>
+          </div>
+        </Router>
+      </>
+    );
+  }
+
+
 }
 
 export default App;
