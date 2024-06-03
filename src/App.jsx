@@ -67,7 +67,7 @@ function App() {
     async function getUserRole() {
       if (userUID) {
         try {
-          const response = await axios.get('https://newsua-217e80321b33.herokuapp.com//get-user-role', {
+          const response = await axios.get('https://newsua-217e80321b33.herokuapp.com/get-user-role', {
             params: {
               id: userUID
             },
@@ -81,12 +81,12 @@ function App() {
     getUserRole();
   }, [userUID]);
 
-  
+
   useEffect(() => {
     async function getUserNickname() {
       if (userUID) {
         try {
-          const response = await axios.get('https://newsua-217e80321b33.herokuapp.com//get-user-nickname', {
+          const response = await axios.get('https://newsua-217e80321b33.herokuapp.com/get-user-nickname', {
             params: {
               id: userUID
             },
@@ -102,7 +102,7 @@ function App() {
 
   const checkIfUserIsBlocked = async (email) => {
     try {
-      const response = await axios.get("https://newsua-217e80321b33.herokuapp.com//is-user-blocked", {
+      const response = await axios.get("https://newsua-217e80321b33.herokuapp.com/is-user-blocked", {
         params: {
           email: email,
         },

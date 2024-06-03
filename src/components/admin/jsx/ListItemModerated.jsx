@@ -25,7 +25,7 @@ const ListItemModerated = ({ article, refreshRate, setRefreshRate }) => {
     const handleSaveStatusClick = async () => {
         console.log("Status value: ", status);
         try {
-            const response = await axios.put(`https://newsua-217e80321b33.herokuapp.com//admin-set-status-moderated`, {
+            const response = await axios.put(`https://newsua-217e80321b33.herokuapp.com/admin-set-status-moderated`, {
                 uid: article.id,
                 status: statusModerated
             });

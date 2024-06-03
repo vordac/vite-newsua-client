@@ -9,7 +9,7 @@ function MainNews({ setSelectedCategory, setSelectedAuthor, setArticleID }) {
     useEffect(() => {
         async function fetchArticles() {
             try {
-                const response = await axios.get('https://newsua-217e80321b33.herokuapp.com//articles-grid', {
+                const response = await axios.get('https://newsua-217e80321b33.herokuapp.com/articles-grid', {
                     params: {
                         category: undefined,
                         sortingType: "views",

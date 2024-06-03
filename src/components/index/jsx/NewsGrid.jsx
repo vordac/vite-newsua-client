@@ -9,7 +9,7 @@ function NewsGrid({ selectedCategory, sortingType, sortingDirection }) {
   useEffect(() => {
     async function fetchArticles() {
       try {
-        const response = await axios.get('https://newsua-217e80321b33.herokuapp.com//all', {
+        const response = await axios.get('https://newsua-217e80321b33.herokuapp.com/all', {
           params: {
             category: selectedCategory,
             sortingType: sortingType,
