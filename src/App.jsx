@@ -81,6 +81,7 @@ function App() {
     getUserRole();
   }, [userUID]);
 
+  
   useEffect(() => {
     async function getUserNickname() {
       if (userUID) {
