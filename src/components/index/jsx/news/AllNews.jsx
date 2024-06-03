@@ -8,7 +8,7 @@ function AllNews({ selectedAuthor, setSelectedAuthor, selectedCategory, setSelec
 
   const fetchArticles = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/all', {
+      const response = await axios.get('https://newsua-217e80321b33.herokuapp.com/all', {
         params: {
           sortingType: sortingType,
           sortingDirection: sortingDirection,

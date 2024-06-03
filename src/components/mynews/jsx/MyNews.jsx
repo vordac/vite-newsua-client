@@ -28,7 +28,7 @@ const MyNews = ({ myNewsTab, userNickname, setMyNewsTab }) => {
 
     async function fetchPublishedArticles() {
         try {
-            const response = await axios.get('http://localhost:5000/my-news-published', {
+            const response = await axios.get('https://newsua-217e80321b33.herokuapp.com/my-news-published', {
                 params: {
                     userNickname: userNickname,
                 },
@@ -43,7 +43,7 @@ const MyNews = ({ myNewsTab, userNickname, setMyNewsTab }) => {
 
     async function fetchModeratedArticles() {
         try {
-            const response = await axios.get('http://localhost:5000/my-news-moderated', {
+            const response = await axios.get('https://newsua-217e80321b33.herokuapp.com/my-news-moderated', {
                 params: {
                     params: {
                         author: userNickname,
@@ -59,7 +59,7 @@ const MyNews = ({ myNewsTab, userNickname, setMyNewsTab }) => {
 
     async function fetchRejectedArticles() {
         try {
-            const response = await axios.get('http://localhost:5000/my-news-rejected', {
+            const response = await axios.get('https://newsua-217e80321b33.herokuapp.com/my-news-rejected', {
                 params: {
                     params: {
                         author: userNickname,
