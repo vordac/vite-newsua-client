@@ -24,7 +24,7 @@ const ListItemPublished = ({ article, refreshRate, setRefreshRate }) => {
 
     const handleSaveStatusClick = async () => {
         try {
-            const response = await axios.put(`https://newsua-217e80321b33.herokuapp.com/admin-set-status-published`, {
+            const response = await axios.put(`http://localhost:5000/admin-set-status-published`, {
                 uid: article.id, 
                 status: statusPublished 
             });

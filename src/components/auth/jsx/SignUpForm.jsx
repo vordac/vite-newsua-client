@@ -15,7 +15,7 @@ const SignUpForm = () => {
     const handleSignupSubmit = async (event) => {
         event.preventDefault();
 
-        const response = await fetch('https://newsua-217e80321b33.herokuapp.com/signup', {
+        const response = await fetch('http://localhost:5000/signup', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

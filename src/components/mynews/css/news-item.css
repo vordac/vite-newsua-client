@@ -1,86 +1,53 @@
-.news-item {
-    background-color: var(--card-background-color);
-    position: relative;
-    bottom: 32px;
+
+.tab-published,
+.tab-moderated,
+.tab-rejected{
+    padding: 16px;
 }
 
-.news-item-preview {
-    width: 100%;
-    height: 200px;
-    transition: .3s ease all;
-}
-
-.news-item-preview img {
+.list-item-news-item{
     width: 100%;
     height: 100%;
+    margin: 16px 0;
+    padding: 16px 0;
+    background-color: white;
+    color: black;
 }
 
-.news-item-category {
-    margin: 4px 0px;
-    color: yellow;
-    z-index: 1000;
-    width: fit-content;
-    font-weight: bold;
+.list-item-news-item-body{
+    display: flex;
+    flex-direction: column;
+    padding: 16px;
 }
 
-.news-item-category:hover{
-    text-decoration: underline;
+.list-item-news-item-title{
+    font-size: 24px;
+}
+
+.list-item-news-item-title:hover{
     cursor: pointer;
+    text-decoration: underline;
 }
 
-.news-item-title {
-    color: var(--card-title-color);
+.list-item-news-item-body-right select{
+    padding: 8px;
+    background-color: transparent;
+    border: 2px solid black;
+}
+
+.list-item-news-item-body-right button{
+    background-color: black;
+    padding: 8px;
+    border: 2px solid black;
+    color: white;
+    margin: 0 8px;
+    border-radius: 0;
     transition: .3s ease all;
-    position: relative;
-    /* bottom: 30px; */
-    font-weight: 500;
 }
 
-.news-item-title:hover {
+.list-item-news-item-body-right button:hover{
+    background-color: transparent;
+    color: black;
+    transition: .3s ease all;
     cursor: pointer;
-    text-decoration: underline;
-}
-
-.news-item-title:hover,
-.news-item-preview:hover .news-item-title {
-  text-decoration: underline; 
-}
-
-.news-item-lower {
-    position: relative;
-    /* bottom: 40px; */
-}
-
-
-.news-item-lower-info-box {
-    display: flex;
-    position: relative;
-    /* bottom: 8px; */
-}
-
-.news-item-lower-info-author,
-.news-item-lower-info-box-views,
-.news-item-lower-info-box-publishtime {
-    color: #959595;
-    font-size: 14px;
-    margin: 0;
-}
-
-.news-item-lower-info-author{
-    width: fit-content;
-}
-
-.news-item-lower-info-author p{
-    margin: 8px 0;
-}
-
-.news-item-lower-info-author:hover{
-    color: #dbdbdb;
-    cursor: pointer;
-}
-
-.news-item-lower-info-box-views{
-    display: flex;
-    justify-content: center;
-    align-items: center;
 }

@@ -4,6 +4,7 @@ import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { app } from '../../../services/Firebase';
 import Swal from 'sweetalert2';
 import '../css/my-news.css';
+import '../css/news-item.css';
 import axios from 'axios';
 
 import MyNewsItem from './MyNewsItem';
@@ -28,7 +29,7 @@ const MyNews = ({ myNewsTab, userNickname, setMyNewsTab }) => {
 
     async function fetchPublishedArticles() {
         try {
-            const response = await axios.get('https://newsua-217e80321b33.herokuapp.com/my-news-published', {
+            const response = await axios.get('http://localhost:5000/my-news-published', {
                 params: {
                     userNickname: userNickname,
                 },
@@ -43,11 +44,9 @@ const MyNews = ({ myNewsTab, userNickname, setMyNewsTab }) => {
 
     async function fetchModeratedArticles() {
         try {
-            const response = await axios.get('https://newsua-217e80321b33.herokuapp.com/my-news-moderated', {
+            const response = await axios.get('http://localhost:5000/my-news-moderated', {
                 params: {
-                    params: {
-                        author: userNickname,
-                    },
+                    userNickname: userNickname,
                 },
             });
             setArticlesModerated(response.data);
@@ -59,11 +58,9 @@ const MyNews = ({ myNewsTab, userNickname, setMyNewsTab }) => {
 
     async function fetchRejectedArticles() {
         try {
-            const response = await axios.get('https://newsua-217e80321b33.herokuapp.com/my-news-rejected', {
+            const response = await axios.get('http://localhost:5000/my-news-rejected', {
                 params: {
-                    params: {
-                        author: userNickname,
-                    },
+                    userNickname: userNickname,
                 },
             });
             setArticlesRejected(response.data);
@@ -72,8 +69,10 @@ const MyNews = ({ myNewsTab, userNickname, setMyNewsTab }) => {
         }
     }
 
-    useEffect(()=>{
+    useEffect(() => {
         fetchPublishedArticles();
+        fetchModeratedArticles();
+        fetchRejectedArticles();
         setIsLoading(false);
     }, [userNickname]);
 
@@ -83,40 +82,59 @@ const MyNews = ({ myNewsTab, userNickname, setMyNewsTab }) => {
 
     if (myNewsTab === 1) {
         return (
-            <div className='my-news-published'>
+            <div className='tab'>
                 <div className='set-tab'>
                     <button onClick={handleFirstTabClick}>Опубліковані</button>
                     <button onClick={handleSecondTabClick}>Модеровані</button>
                     <button onClick={handleThirdTabClick}>Відхилені</button>
                 </div>
-                <div className="news-grid-items">
-                {
-                    Array.isArray(articlesPublished) && articlesPublished.map((article) => (
-                        <MyNewsItem
-                            article={{ ...article, imageUrl: article.preview }}
-                        />
-                    ))
-                }
+                <div className="tab-published">
+                    {
+                        Array.isArray(articlesPublished) && articlesPublished.map((article) => (
+                            <MyNewsItem
+                                article={{ ...article, imageUrl: article.preview }}
+                            />
+                        ))
+                    }
                 </div>
             </div>
         );
     } else if (myNewsTab === 2) {
         return (
-            <div className='my-news-moderated'>
+            <div className='tab'>
                 <div className='set-tab'>
-                <button onClick={handleFirstTabClick}>Опубліковані</button>
+                    <button onClick={handleFirstTabClick}>Опубліковані</button>
                     <button onClick={handleSecondTabClick}>Модеровані</button>
                     <button onClick={handleThirdTabClick}>Відхилені</button>
                 </div>
+                <div className="tab-moderated">
+                    {
+                        Array.isArray(articlesModerated) && articlesModerated.map((article) => (
+                            <MyNewsItem
+                                article={{ ...article, imageUrl: article.preview }}
+                            />
+                        ))
+                    }
+                </div>
             </div>
+
         );
     } else {
         return (
-            <div className='my-news-rejected'>
+            <div className='tab'>
                 <div className='set-tab'>
-                <button onClick={handleFirstTabClick}>Опубліковані</button>
+                    <button onClick={handleFirstTabClick}>Опубліковані</button>
                     <button onClick={handleSecondTabClick}>Модеровані</button>
                     <button onClick={handleThirdTabClick}>Відхилені</button>
+                </div>
+                <div className="tab-rejected">
+                    {
+                        Array.isArray(articlesRejected) && articlesRejected.map((article) => (
+                            <MyNewsItem
+                                article={{ ...article, imageUrl: article.preview }}
+                            />
+                        ))
+                    }
                 </div>
             </div>
         );

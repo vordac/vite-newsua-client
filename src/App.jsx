@@ -71,7 +71,7 @@ function App() {
     async function getUserRole() {
       if (userUID) { // only fetch user role if userUID is not an empty string
         try {
-          const response = await axios.get('https://newsua-217e80321b33.herokuapp.com/get-user-role', {
+          const response = await axios.get('http://localhost:5000/get-user-role', {
             params: {
               id: userUID
             },
@@ -92,7 +92,7 @@ function App() {
     async function getUserNickname() {
       if (userUID) { 
         try {
-          const response = await axios.get('https://newsua-217e80321b33.herokuapp.com/get-user-nickname', {
+          const response = await axios.get('http://localhost:5000/get-user-nickname', {
             params: {
               id: userUID
             },

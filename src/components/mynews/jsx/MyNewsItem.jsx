@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom'; // import useNavigate hook
+import { useNavigate } from 'react-router-dom'; 
 import { Card } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faComment, faThumbsUp } from '@fortawesome/free-solid-svg-icons';
@@ -23,38 +23,15 @@ const MyNewsItem = ({ article, setSelectedCategory, setSelectedAuthor }) => {
         navigate('/read', { state: { id } });
     };
 
+
     return (
-        <Card className="news-item">
-            <Link
-                key={article.id}
-                to="/read"
-                state={{ id: article.id }}
-                onClick={() => handleReadClick(article.id)}
-            >
-                <Card.Img src={imageUrl} alt={title} className="news-item-preview" />
-            </Link>
-            <Card.Text className="news-item-category" >{category}</Card.Text>
-            <Card.Body className="news-item-body">
-                <div className='news-item-upper'>
-                    <Card.Title className="news-item-title" onClick={() => handleReadClick(article.id)}>{title}</Card.Title>
-                </div>
-                <div className='news-item-lower'>
-                    <div className='news-item-lower-info'>
-                        <div className="news-item-lower-info-author">
-                            <Card.Text >{author}</Card.Text>
-                        </div>
-                        <div className='news-item-lower-info-box'>
-                            <Card.Text className="news-item-lower-info-box-views">
-                                <FontAwesomeIcon icon={faEye} />
-                                <div>&nbsp;{views}&nbsp;&nbsp;&#x2022;&nbsp;&nbsp;</div>
-                            </Card.Text>
-                            <Card.Text className="news-item-lower-info-box-views">
-                                <FontAwesomeIcon icon={faThumbsUp} />
-                                <div>&nbsp;{rating}&nbsp;&nbsp;&#x2022;&nbsp;&nbsp;</div>
-                            </Card.Text>
-                            <Card.Text className="news-item-lower-info-box-publishtime">{formattedPublishTime}</Card.Text>
-                        </div>
-                    </div>
+        <Card className="list-item-news-item">
+            <Card.Body className="list-item-news-item-body">
+                <div className='list-item-news-item-body-left'>
+                    <Card.Title className="list-item-news-item-title" onClick={() => handleReadClick(article.id)}>{title}</Card.Title>
+                    <Card.Text className="list-item-news-item-category" >Категорія: {category}</Card.Text>
+                    <Card.Text >Автор: {author}</Card.Text>
+                    <Card.Text className="list-item-news-item-lower-info-box-publishtime">Час публікації: {formattedPublishTime}</Card.Text>
                 </div>
             </Card.Body>
         </Card>
