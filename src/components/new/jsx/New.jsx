@@ -90,6 +90,7 @@ const New = () => {
                   content,
                   publishTime: serverTimestamp(),
                   preview: imageUrl,
+                  status: "moderated",
                 };
 
                 const articleDocRef = await addDoc(collection(db, 'articles'), newArticle);
@@ -119,6 +120,7 @@ const New = () => {
               content,
               publishTime: serverTimestamp(),
               preview: "",
+              status: "moderated",
             };
 
             const articleDocRef = await addDoc(collection(db, 'articles'), newArticle);
