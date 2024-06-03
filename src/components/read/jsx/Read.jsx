@@ -35,7 +35,7 @@ const Read = ({ setSelectedAuthor, setSelectedCategory }) => {
     useEffect(() => {
         async function fetchArticle() {
             try {
-                const response = await axios.get('http://localhost:5000/read', {
+                const response = await axios.get('https://newsua-217e80321b33.herokuapp.com//read', {
                     params: {
                         id: id
                     },
@@ -92,30 +92,27 @@ const Read = ({ setSelectedAuthor, setSelectedCategory }) => {
             return;
         }
 
-        // Prevent multiple clicks on the same reaction
         if (userReaction === reaction) return;
 
         try {
             const articleRef = doc(db, 'articles', id);
             let newRating = article.rating;
 
-            // If the user is changing their reaction, subtract their previous reaction first
             if (userReaction) {
                 newRating -= userReaction;
             }
 
-            // Add the new reaction
             newRating += reaction;
 
             await updateDoc(articleRef, {
                 rating: newRating,
                 userReactions: {
                     ...article.userReactions,
-                    [userId]: reaction, // Store the user's reaction in Firestore
+                    [userId]: reaction, 
                 },
             });
 
-            setUserReaction(reaction); // Update the local state
+            setUserReaction(reaction);
         } catch (error) {
             setError(`Error updating article: ${error}`);
         }

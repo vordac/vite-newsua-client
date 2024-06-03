@@ -42,7 +42,7 @@ const Admin = ({ userRole }) => {
 
     async function fetchAuthors() {
         try {
-            const response = await axios.get('http://localhost:5000/admin-get-authors', {
+            const response = await axios.get('https://newsua-217e80321b33.herokuapp.com//admin-get-authors', {
             });
             setAuthors(response.data);
             console.log(response.data);
@@ -53,7 +53,7 @@ const Admin = ({ userRole }) => {
 
     async function fetchModerators() {
         try {
-            const response = await axios.get('http://localhost:5000/admin-get-moderators', {
+            const response = await axios.get('https://newsua-217e80321b33.herokuapp.com//admin-get-moderators', {
             });
             setModerators(response.data);
             console.log(response.data);
@@ -64,7 +64,7 @@ const Admin = ({ userRole }) => {
 
     async function fetchPublishedArticles() {
         try {
-            const response = await axios.get('http://localhost:5000/admin-get-published', {
+            const response = await axios.get('https://newsua-217e80321b33.herokuapp.com//admin-get-published', {
             });
             setArticlesPublished(response.data);
             console.log(response.data);
@@ -76,7 +76,7 @@ const Admin = ({ userRole }) => {
 
     async function fetchModeratedArticles() {
         try {
-            const response = await axios.get('http://localhost:5000/admin-get-moderated', {
+            const response = await axios.get('https://newsua-217e80321b33.herokuapp.com//admin-get-moderated', {
             });
             setArticlesModerated(response.data);
         } catch (error) {
@@ -87,7 +87,7 @@ const Admin = ({ userRole }) => {
 
     async function fetchRejectedArticles() {
         try {
-            const response = await axios.get('http://localhost:5000/admin-get-rejected', {
+            const response = await axios.get('https://newsua-217e80321b33.herokuapp.com//admin-get-rejected', {
             });
             setArticlesRejected(response.data);
         } catch (error) {

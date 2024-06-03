@@ -12,7 +12,7 @@ const ListItemModerators = ({ key, element, setModerators, refreshRate, setRefre
 
     const handleBlockClick = async () => {
         try {
-            const response = await axios.put(`http://localhost:5000/admin-block-user?uid=${uid}`);
+            const response = await axios.put(`https://newsua-217e80321b33.herokuapp.com//admin-block-user?uid=${uid}`);
             console.log(response.data);
             setModerators(prevModerators => prevModerators.map(moderator => moderator.uid === uid ? { ...moderator, isBlocked: true } : moderator));
             setRefreshRate(1);
@@ -25,7 +25,7 @@ const ListItemModerators = ({ key, element, setModerators, refreshRate, setRefre
     const handleUnblockClick = async () => {
         try {
             setIsBlocked(false);
-            const response = await axios.put(`http://localhost:5000/admin-unblock-user?uid=${uid}`);
+            const response = await axios.put(`https://newsua-217e80321b33.herokuapp.com//admin-unblock-user?uid=${uid}`);
             console.log(response.data);
             setModerators(prevModerators => prevModerators.map(moderator => moderator.uid === uid ? { ...moderator, isBlocked: false } : moderator));
             setRefreshRate(refreshRate + 1);
@@ -36,7 +36,7 @@ const ListItemModerators = ({ key, element, setModerators, refreshRate, setRefre
 
     const handleSetAuthorClick = async () => {
         try {
-            const response = await axios.put(`http://localhost:5000/admin-set-author?uid=${uid}`);
+            const response = await axios.put(`https://newsua-217e80321b33.herokuapp.com//admin-set-author?uid=${uid}`);
             console.log(response.data);
             setModerators(prevModerators => prevModerators.map(moderator => moderator.uid === uid ? { ...moderator, role: 'author' } : moderator));
             setRefreshRate(refreshRate + 1);

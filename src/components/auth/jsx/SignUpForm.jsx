@@ -15,7 +15,7 @@ const SignUpForm = () => {
     const handleSignupSubmit = async (event) => {
         event.preventDefault();
 
-        const response = await fetch('http://localhost:5000/signup', {
+        const response = await fetch('https://newsua-217e80321b33.herokuapp.com//signup', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -58,36 +58,6 @@ const SignUpForm = () => {
                 <button ><FontAwesomeIcon icon={faArrowLeft} onClick={handleBackClick} /></button>
             </div>
         </div>
-        // <form onSubmit={handleSignupSubmit} className='auth-signup-form'>
-        //     <label>
-        //         Email:
-        //         <input
-        //             type="email"
-        //             value={email}
-        //             onChange={(event) => setEmail(event.target.value)}
-        //         />
-        //     </label>
-        //     <br />
-        //     <label>
-        //         Password:
-        //         <input
-        //             type="password"
-        //             value={password}
-        //             onChange={(event) => setPassword(event.target.value)}
-        //         />
-        //     </label>
-        //     <br />
-        //     <label>
-        //         Username:
-        //         <input
-        //             type="username"
-        //             value={username}
-        //             onChange={(event) => setUsername(event.target.value)}
-        //         />
-        //     </label>
-        //     <br />
-        //     <button type="submit">Sign Up</button>
-        // </form>
     );
 }
 

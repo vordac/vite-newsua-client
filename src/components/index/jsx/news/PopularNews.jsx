@@ -10,7 +10,7 @@ function PopularNews({ selectedCategory, sortingType, sortingDirection, setSorti
     useEffect(() => {
         async function fetchArticles() {
             try {
-                const response = await axios.get('http://localhost:5000/articles-grid', {
+                const response = await axios.get('https://newsua-217e80321b33.herokuapp.com//articles-grid', {
                     params: {
                         category: undefined,
                         sortingType: "rating",

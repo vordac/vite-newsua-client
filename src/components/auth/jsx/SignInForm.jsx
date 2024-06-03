@@ -18,7 +18,7 @@ const SignInForm = ({ setUser, user, setIsUserBlocked }) => {
 
   const checkIfUserIsBlocked = async (email) => {
     try {
-      const response = await axios.get("http://localhost:5000/is-user-blocked", {
+      const response = await axios.get("https://newsua-217e80321b33.herokuapp.com//is-user-blocked", {
         params: {
           email: email,
         },

@@ -62,9 +62,6 @@ const Header = ({ user, userRole, auth, selectedCategory, sortingType, sortingDi
                 </div>
                 <div className='header-manage'>
 
-                    {/* <div className="sorting-dropdown-button">
-                        <DropdownSort sortingType={sortingType} sortingDirection={sortingDirection} setSortingType={setSortingType} setSortingDirection={setSortingDirection} />
-                    </div> */}
                     <div className='auth-controller'>
                         {user ? (
                             <DropdownUser auth={auth} userRole={userRole}/>

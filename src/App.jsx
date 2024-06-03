@@ -67,7 +67,7 @@ function App() {
     async function getUserRole() {
       if (userUID) {
         try {
-          const response = await axios.get('http://localhost:5000/get-user-role', {
+          const response = await axios.get('https://newsua-217e80321b33.herokuapp.com//get-user-role', {
             params: {
               id: userUID
             },
@@ -85,7 +85,7 @@ function App() {
     async function getUserNickname() {
       if (userUID) {
         try {
-          const response = await axios.get('http://localhost:5000/get-user-nickname', {
+          const response = await axios.get('https://newsua-217e80321b33.herokuapp.com//get-user-nickname', {
             params: {
               id: userUID
             },
@@ -99,10 +99,9 @@ function App() {
     getUserNickname();
   }, [userUID]);
 
-  // Create a function to check if the user is blocked
   const checkIfUserIsBlocked = async (email) => {
     try {
-      const response = await axios.get("http://localhost:5000/is-user-blocked", {
+      const response = await axios.get("https://newsua-217e80321b33.herokuapp.com//is-user-blocked", {
         params: {
           email: email,
         },
@@ -114,7 +113,6 @@ function App() {
     }
   };
 
-  // Call the function when the component mounts
   useEffect(() => {
     if (user && user.email) {
       checkIfUserIsBlocked(user.email);
@@ -269,17 +267,17 @@ function App() {
         <Router>
           <div className="App">
             <Routes>
-              <Route path="/" element={<LayoutIndex />}></Route>
-              <Route path="/login" element={<LayoutLogin />}></Route>
-              <Route path="/register" element={<LayoutRegister />}></Route>
-              <Route path="/read" element={<LayoutRead />}></Route>
-              <Route path="/author" element={<LayoutAuthor />}></Route>
-              <Route path="/category" element={<LayoutCategory />}></Route>
-              <Route path="/all" element={<LayoutAll />}></Route>
-              <Route path="/new" element={<LayoutNew />}></Route>
+              <Route path="/" element={<LayoutIndex />}/>
+              <Route path="/login" element={<LayoutLogin />}/>
+              <Route path="/register" element={<LayoutRegister />}/>
+              <Route path="/read" element={<LayoutRead />}/>
+              <Route path="/author" element={<LayoutAuthor />}/>
+              <Route path="/category" element={<LayoutCategory />}/>
+              <Route path="/all" element={<LayoutAll />}/>
+              <Route path="/new" element={<LayoutNew />}/>
               <Route path="/profile" element={<LayoutProfile />} />
-              <Route path="/my-news" element={<LayoutMyNews />}></Route>
-              <Route path="/admin" element={<LayoutAdmin />}></Route>
+              <Route path="/my-news" element={<LayoutMyNews />}/>
+              <Route path="/admin" element={<LayoutAdmin />} />
               <Route path="/moder" element={<LayoutModer />} />
             </Routes>
           </div>
